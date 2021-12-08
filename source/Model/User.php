@@ -8,7 +8,7 @@ class User extends Model
     protected static $columns = [
         'primary' => 'id',
         'require' => ['first_name', 'last_name', 'email', 'password'],
-        'timestamps' => true
+        'timestamp' => true
     ];
 
     private function validation(): void

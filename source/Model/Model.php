@@ -60,7 +60,7 @@ abstract class Model extends DataBase
 
     protected function insert(): bool
     {
-        if (static::$columns['timestamps']) {
+        if (static::$columns['timestamp']) {
 
             $this->created_at = date('Y-m-d H:i:s');
         }
@@ -82,7 +82,7 @@ abstract class Model extends DataBase
 
     protected function update(): bool
     {
-        if (static::$columns['timestamps']) {
+        if (static::$columns['timestamp']) {
 
             $this->updated_at = date('Y-m-d H:i:s');
         }
