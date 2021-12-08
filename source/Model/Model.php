@@ -3,6 +3,7 @@
 namespace Source\Model;
 
 use PDO;
+use Exception;
 use Source\DataBase\DataBase;
 use Source\Traits\Attributes;
 
@@ -31,12 +32,9 @@ abstract class Model extends DataBase
 
     public function save(): bool
     {
-        $primary = static::$columns['primary'];
+        $this->checkRequiredColumns();
 
-//        if (!in_array(static::$columns['require'], array_keys($this->attributes), true)) {
-//
-//            throw new Exception('Existem campos obrigatórios');
-//        }
+        $primary = static::$columns['primary'];
 
         if (isset($this->$primary)) {
 
@@ -44,6 +42,20 @@ abstract class Model extends DataBase
         }
 
         return $this->insert();
+    }
+
+    protected function checkRequiredColumns()
+    {
+        if (!empty($required_columns = static::$columns['require'])) {
+
+            foreach ($required_columns as $column) {
+
+                if (!in_array($column, array_keys($this->attributes))) {
+
+                    throw new Exception('O objeto deve conter todos os atributos obrigatórios');
+                }
+            }
+        }
     }
 
     protected function insert(): bool

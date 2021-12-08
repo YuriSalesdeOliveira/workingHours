@@ -36,17 +36,7 @@ class Validation extends Model
 
     public function unique(array $attributes): Validation
     {
-        $primary = static::$columns['primary'];
-
         foreach ($attributes as $key => $class) {
-
-            if (isset($this->$primary)) {
-
-                $result = $class::find([$primary => $this->$primary]);
-
-                if ($result && $result->$key === $this->$key) return $this;
-
-            }
 
             $result = $class::find([$key => $this->$key]);
 

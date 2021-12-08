@@ -3,7 +3,6 @@
 
 namespace Source\Controller;
 
-use Exception;
 use Source\Exception\AppException;
 use Source\Exception\ValidationException;
 use Source\Model\Login;
@@ -15,33 +14,30 @@ class Auth extends Controller
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        if (isset($data['email']) && isset($data['password'])) {
+        try {
 
-            try {
+            $login = new Login();
 
-                $login = new Login([
-                    'email' => $data['email'],
-                    'password' => $data['password']
-                ]);
+            $login->email = $data['email'];
+            $login->password = $data['password'];
 
-                $user = $login->login();
+            $user = $login->login();
 
-                $_SESSION['user'] = $user->id;
+            $_SESSION['user'] = $user->id;
 
-                $this->router->redirect('web.home');
+            $this->router->redirect('web.home');
 
-            } catch (ValidationException $e) {
+        } catch (ValidationException $e) {
 
-                setMessage($e->getErrors());
+            setMessage($e->getErrors());
 
-            } catch (AppException $e) {
+        } catch (AppException $e) {
 
-                setMessage(['login_error' => $e->getMessage()]);
+            setMessage(['login_error' => $e->getMessage()]);
 
-            } finally {
+        } finally {
 
-                $this->router->redirect('web.login');
-            }
+            $this->router->redirect('web.login');
         }
     }
 
@@ -49,26 +45,30 @@ class Auth extends Controller
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        if ($data['first_name'] &&
-            $data['last_name'] &&
-            $data['email'] &&
-            $data['password']) {
+        try {
 
-            try {
+            $user = new User();
 
-                $user = new User();
+            $user->first_name = $data['first_name'];
+            $user->last_name = $data['last_name'];
+            $user->email = $data['email'];
+            $user->password = $data['password'];
 
-                $user->save();
+            $user->save();
 
-                $data['_POST'] = [];
+            $this->router->redirect('web.home');
 
-                $this->router->redirect('web.home');
+        } catch (ValidationException $e) {
 
-            } catch (Exception $e) {
+            setMessage($e->getErrors());
 
+        } catch (AppException $e) {
 
-            }
+            setMessage(['login_error' => $e->getMessage()]);
 
+        } finally {
+
+            $this->router->redirect('web.register');
         }
     }
 }

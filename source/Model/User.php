@@ -15,8 +15,8 @@ class User extends Model
     {
         $validation = new Validation($this->attributes);
 
-        $validation->unique(['email' => User::class]);
-
+        if (empty($this->{static::$columns['primary']})) $validation->unique(['email' => User::class]);
+        
         $validation->isEmail(['email']);
 
         $validation->min(['password' => 8]);

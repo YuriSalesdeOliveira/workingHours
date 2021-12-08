@@ -27,7 +27,7 @@ define('DATA_BASE_CONFIG', [
     'driver' => 'mysql',
     'host' => 'db',
     'port' => '3306',
-    'dbname' => 'notes',
+    'dbname' => 'working_hours',
     'charset' => 'utf8',
     'username' => 'root',
     'password' => 'root',

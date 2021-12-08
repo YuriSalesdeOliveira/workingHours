@@ -15,14 +15,14 @@ class WorkingHours extends Model
         'timestamps' => false,
     ];
 
-    public static function workingHours($user_id, string $work_date): WorkingHours
+    public static function workingHours($user, string $work_date): WorkingHours
     {
-        $working_hours = self::find(['user_id' => $user_id, 'work_date' => $work_date]);
+        $working_hours = self::find(['user' => $user, 'work_date' => $work_date]);
 
         if (!$working_hours) {
 
             $working_hours = new WorkingHours([
-                'user_id' => $user_id,
+                'user' => $user,
                 'work_date' => $work_date,
                 'worked_time' => 0
             ]);
