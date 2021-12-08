@@ -1,0 +1,54 @@
+:root {
+
+    /*
+    COR PRINCIPAL
+     */
+
+    --main_color_light: #738fa1;
+    --main_color: #597384;
+    --main_color_dark: #475c6a;
+    --main_color_dark_variation_01: #2e3b44;
+    --main_color_dark_variation_02: #12171b;
+
+    /*
+    COR MEDIA
+     */
+
+    --medium_color_light: #fcfeff;
+    --medium_color: #f3f4f6;
+    --medium_color_dark: #eaeaec;
+    --medium_color_dark_variation_01: #dddde0;
+    --medium_color_dark_variation_02: #d1d1d4;
+    --medium_color_dark_variation_04: #a9a9ab;
+    --medium_color_dark_variation_05: #9b9b9d;
+    --medium_color_dark_variation_06: #88888a;
+    --medium_color_dark_variation_07: #757373;
+    --medium_color_dark_variation_08: #535354;
+    --medium_color_dark_variation_09: #444445;
+
+    /*
+    COR ESCURA
+     */
+
+    --dark_color: #000000;
+    --dark_color_light: #151515;
+    --dark_color_light_variation_01: #303030;
+    --dark_color_light_variation_02: #4d4d4d;
+
+    /*
+    COR CLARA
+     */
+
+    --light_color: #ffffff;
+    --light_color_dark: #f6f6f6;
+    --light_color_dark_variation_01: #a3a3a3;
+    --light_color_dark_variation_02: #686868;
+    --light_color_dark_variation_03: #585858;
+
+    /*
+    COR DESTAQUE
+     */
+
+    --accent_color: #972941;
+    --accent_color_dark: #862439;
+}

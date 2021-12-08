@@ -1,0 +1,25 @@
+{
+  "name": "yurioliveira/working_hours",
+  "description": "Pontos de entrada e saída",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yuri Sales de Oliveira",
+      "email": "yuri_oli@hotmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source"
+    },
+    "files": [
+      "source/Config.php",
+      "source/Helpers.php"
+    ]
+  },
+  "require": {
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "coffeecode/router": "1.0.7"
+  }
+}
