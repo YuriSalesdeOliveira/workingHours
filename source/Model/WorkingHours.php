@@ -11,7 +11,7 @@ class WorkingHours extends Model
     protected static $entity = 'working_hours';
     protected static $columns = [
         'primary' => 'id',
-        'require' => ['user_id', 'work_date', 'worked_time'],
+        'require' => ['user', 'work_date', 'worked_time'],
         'timestamp' => false,
     ];
 
@@ -56,6 +56,13 @@ class WorkingHours extends Model
     public function toClockIn(string $time): void
     {
         $next_time = $this->getNextTime();
+
+        if ($next_time === 'time2' || $next_time === 'time4') {
+
+            $worked_time = convertDateIntervalToDateTime($this->workedHours())->format('H:i:s');
+
+            $this->worked_time = $worked_time;
+        }
 
         if (!$next_time) {
 

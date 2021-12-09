@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Source\Controller;
-
 
 use Source\Model\User;
 use Source\Model\WorkingHours;
@@ -36,19 +34,28 @@ class Web extends Controller
     {
         $this->restrict();
 
+        $users = $this->user->is_admin ? User::find() : User::find(['id' => $this->user->id]);
+
         $this->view->load('users', [
             'page' => 'Usuários',
-            'users' => User::find()
+            'users' => $users
         ])
             ->render();
     }
 
-    public function report(): void
+    public function report($data): void
     {
         $this->restrict();
 
+        $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        $reports = isset($data['user']) ?
+        WorkingHours::find(['user' => $data['user']]) :
+        WorkingHours::find();
+
         $this->view->load('report', [
-            'page' => 'Relatório'
+            'page' => 'Relatório',
+            'reports' => $reports
         ])
             ->render();
     }

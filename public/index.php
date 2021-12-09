@@ -18,7 +18,10 @@ $router->group(null);
 $router->get('/', 'Web:home', 'web.home');
 $router->get('/home', 'Web:home', 'web.home');
 $router->get('/usuarios', 'Web:users', 'web.users');
+
 $router->get('/relatorio', 'Web:report', 'web.report');
+$router->get('/relatorio/{user}', 'Web:report', 'web.report');
+
 $router->get('/login', 'Web:login', 'web.login');
 $router->get('/registrar', 'Web:register', 'web.register');
 

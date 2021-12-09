@@ -26,9 +26,7 @@
 
 <nav class="main_header_nav">
 
-    <a title="home" href="<?= url('home') ?>" class="main_header_nav_item">Home</a>
-    <a href="<?= url('usuarios') ?>" class="main_header_nav_item">Usuários</a>
-    <a title="report" href="<?= url('relatorio') ?>" class="main_header_nav_item">Relatório</a>
-    <a title="report" href="<?= url('registrar') ?>" class="main_header_nav_item">Registrar</a>
+    <a title="inicio" href="<?= url('home') ?>" class="main_header_nav_item">Home</a>
+    <a title="relatório" href="<?= url('relatorio') ?>" class="main_header_nav_item">Relatório</a>
 
 </nav>
