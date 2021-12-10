@@ -50,8 +50,8 @@ class Web extends Controller
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
         $reports = isset($data['user']) ?
-        WorkingHours::find(['user' => $data['user']]) :
-        WorkingHours::find();
+        WorkingHours::find(['user' => $data['user'], 'sql_raw' => "work_date > '2021-12-1'"]) :
+        WorkingHours::find(['sql_raw' => "work_date > '2021-12-1'"]);
 
         $this->view->load('report', [
             'page' => 'Relatório',

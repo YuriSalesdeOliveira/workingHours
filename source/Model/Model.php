@@ -137,6 +137,8 @@ abstract class Model extends DataBase
 
         $stmt = $connection->prepare($sql);
 
+        unset($filters['sql_raw']);
+
         $stmt->execute($filters);
 
         return $stmt;
@@ -150,9 +152,15 @@ abstract class Model extends DataBase
 
                 $sql = ' WHERE 1 = 1 ';
 
-                foreach (array_keys($filters) as $key) {
+                foreach ($filters as $key => $value) {
 
-                    $sql .= " AND {$key} = :{$key}";
+                    if ($key === 'sql_raw') {
+                        
+                        $sql .= " AND {$value}";
+                    } else {
+
+                        $sql .= " AND {$key} = :{$key}";
+                    }
                 }
 
                 break;
