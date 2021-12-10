@@ -30,6 +30,6 @@
         <?php $v->view('theme/footer'); ?>
 
     </footer>
-    <script src="<?= asset('js/app.js') ?>"></script>
+    <?php $v->getScripts(); ?>
 </body>
 </html>

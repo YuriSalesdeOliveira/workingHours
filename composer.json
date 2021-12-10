@@ -14,7 +14,8 @@
     },
     "files": [
       "source/Config.php",
-      "source/Helpers.php"
+      "source/Helpers.php",
+      "source/Date_utils.php"
     ]
   },
   "require": {

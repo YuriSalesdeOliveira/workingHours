@@ -19,6 +19,8 @@ abstract class Controller
 
         $this->router = $router;
 
+        $this->view->addData(['router' => $this->router]);
+
         if (isset($_SESSION['user']) && $user = User::find(['id' => $_SESSION['user']])) {
 
             $this->user = $user;

@@ -3,17 +3,11 @@
 date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_TIME,  'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-/*
- * PATHS
- */
+define('DAILY_TIME', 60 * 60 * 8);
 
 define('PATHS', [
     'view' => __DIR__ . '/view'
 ]);
-
-/*
- *
- */
 
 define('SITE', [
     'name' => 'Working Hours',

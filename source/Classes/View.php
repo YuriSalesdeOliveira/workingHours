@@ -9,6 +9,7 @@ class View
     private $layout;
     private $view;
     private $data;
+    private $scripts = [];
 
     public function __construct(string $base_dir, string $extension)
     {
@@ -70,6 +71,17 @@ class View
         require_once($this->base_dir . "/{$require}.{$this->extension}");
 
         return $this;
+    }
+
+    public function addScripts(array $scripts)
+    {
+        foreach ($scripts as $reference => $src)
+            $this->scripts[$reference] = "<script src=\"{$src}\"></script>";
+    }
+
+    public function getScripts()
+    {
+        foreach ($this->scripts as $script) echo $script;
     }
 
     public function view(string $view = null): void

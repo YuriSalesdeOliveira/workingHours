@@ -199,6 +199,38 @@ main.main_content {
     box-sizing: border-box;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    user-select: none;
+    height: 50px;
+    text-align: left;
+    padding: 0 10px;
+    color: var(--medium_color_dark_variation_06);
+    background-color: var(--medium_color);
+}
+
+td {
+    height: 50px;
+    padding: 0 10px;
+    color: var(--medium_color_dark_variation_06);
+}
+
+tr[data-tr_href]:hover {
+    cursor: pointer;
+}
+
+tr:hover {
+    background-color: var(--medium_color_light);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--medium_color_light);
+}
+
 div.card {
     display: grid;
     grid-template-columns: 1fr;

@@ -169,3 +169,8 @@
 
     </div>
 </div>
+
+<?php $v->addScripts([
+    'modal' => asset('js/modal.js'),
+    'active_clock' => asset('js/active_clock')
+]); ?>

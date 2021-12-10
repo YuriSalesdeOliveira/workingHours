@@ -15,6 +15,11 @@ class WorkingHours extends Model
         'timestamp' => false,
     ];
 
+    public function user()
+    {
+        return User::find(['id' => $this->user]);
+    }
+
     public static function workingHours($user, string $work_date): WorkingHours
     {
         $working_hours = self::find(['user' => $user, 'work_date' => $work_date]);

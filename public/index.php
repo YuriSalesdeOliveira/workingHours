@@ -20,7 +20,9 @@ $router->get('/home', 'Web:home', 'web.home');
 $router->get('/usuarios', 'Web:users', 'web.users');
 
 $router->get('/relatorio', 'Web:report', 'web.report');
-$router->get('/relatorio/{user}', 'Web:report', 'web.report');
+$router->get('/relatorio/{date}', 'Web:report', 'web.report.date');
+$router->get('/relatorio/{user}', 'Web:report', 'web.report.user');
+$router->get('/relatorio/{user}/{date}', 'Web:report', 'web.report.user.date');
 
 $router->get('/login', 'Web:login', 'web.login');
 $router->get('/registrar', 'Web:register', 'web.register');

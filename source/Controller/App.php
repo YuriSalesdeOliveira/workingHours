@@ -31,6 +31,11 @@ class App extends Controller
         $this->router->redirect('web.home');
     }
 
+    public function dataGenerator()
+    {
+        
+    }
+
     public function logout(): void
     {
         unset($_SESSION['user']);
