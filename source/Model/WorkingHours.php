@@ -20,6 +20,27 @@ class WorkingHours extends Model
         return User::find(['id' => $this->user]);
     }
 
+    public static function getMonthlyReport(int|string $user, string|DateTime $date)
+    {
+        $report = [];
+
+        $date = dateAsDateTime($date);
+        
+        $firstDate = $date->modify('first day of this month')->format('Y-m-d');
+        $lastDate = $date->modify('last day of this month')->format('Y-m-d');
+        
+        $result = static::find([
+            'user' => $user,
+            'sql_raw' => "work_date between '{$firstDate}' AND '{$lastDate}'"
+        ]);
+        
+        if ($result)
+            foreach ($result as $working_hours)
+                $report[$working_hours->work_date] = $working_hours;
+
+        return $report;
+    }
+
     public static function workingHours($user, string $work_date): WorkingHours
     {
         $working_hours = self::find(['user' => $user, 'work_date' => $work_date]);
@@ -45,7 +66,7 @@ class WorkingHours extends Model
         return null;
     }
 
-    private function getTimeHowDateTime(): array
+    private function getTimeAsDateTime(): array
     {
         try {
             isset($this->time1) ? $times[] = new DateTime($this->time1) : $times[] = null;
@@ -62,13 +83,6 @@ class WorkingHours extends Model
     {
         $next_time = $this->getNextTime();
 
-        if ($next_time === 'time2' || $next_time === 'time4') {
-
-            $worked_time = convertDateIntervalToDateTime($this->workedHours())->format('H:i:s');
-
-            $this->worked_time = $worked_time;
-        }
-
         if (!$next_time) {
 
             setMessage(['exceeded_to_clock_in' => 'Limite de pontos por dia alcançados.']);
@@ -77,13 +91,14 @@ class WorkingHours extends Model
         }
 
         $this->$next_time = $time;
+        $this->worked_time = convertDateIntervalToDateTime($this->workedHours())->format('H:i:s');
 
         parent::save();
     }
 
     public function workedHours(): DateInterval
     {
-        [$time1, $time2, $time3, $time4] = $this->getTimeHowDateTime();
+        [$time1, $time2, $time3, $time4] = $this->getTimeAsDateTime();
 
         $part1 = new DateInterval('PT0S');
         $part2 = new DateInterval('PT0S');
@@ -99,7 +114,7 @@ class WorkingHours extends Model
 
     public function breakHours(): DateInterval
     {
-        [, $time2, $time3,] = $this->getTimeHowDateTime();
+        [, $time2, $time3,] = $this->getTimeAsDateTime();
 
         $breakHours = new DateInterval('PT0S');
 
@@ -111,13 +126,13 @@ class WorkingHours extends Model
 
     public function exitTime(): DateTime
     {
-        [$time1, , , $time4] = $this->getTimeHowDateTime();
+        [$time1, , , $time4] = $this->getTimeAsDateTime();
 
         $full_working_hours = new DateInterval('PT8H');
 
         if (!$time1) return (new DateTime())->add($full_working_hours);
         if ($time4) return $time4;
-
+        
         $total = sumInterval($full_working_hours, $this->breakHours());
         return $time1->add($total);
     }

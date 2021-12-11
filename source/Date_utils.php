@@ -4,6 +4,51 @@ use Source\Exception\AppException;
 use Source\Model\User;
 use Source\Model\WorkingHours;
 
+function getPreviousFiveYearsThatDate(string|DateTime $date): array
+{
+    $date = dateAsDateTime($date);
+
+    $previous_five_years = [];
+
+    for ($number_of_years = 5; $number_of_years !== 0; --$number_of_years)
+    {
+        array_push($previous_five_years, $date->format('Y'));
+        
+        $date = $date->modify('-1 year');
+    }
+
+    return $previous_five_years;
+}
+
+function getPreviousMonthsThatDate(string|DateTime $date): array
+{
+    $date = dateAsDateTime($date);
+
+    $filtered_months = [];
+
+    $months = [
+        '1' => 'january',
+        '2' => 'february',
+        '3' => 'march',
+        '4' => 'april',
+        '5' => 'may',
+        '6' => 'june',
+        '7' => 'july',
+        '8' => 'august',
+        '9' => 'september',
+        '10' => 'october',
+        '11' => 'november',
+        '12' => 'december'
+    ];
+
+    foreach ($months as $number => $month) {
+        
+        $filtered_months[$number] = $month;
+
+        if ($number == $date->format('m')) return $filtered_months;
+    }
+}
+
 function dateAsDateTime(string|DateTime $date): DateTime
 {
     return is_string($date) ? new DateTime($date) : $date;

@@ -1,3 +1,48 @@
+
+<form action="<?php $router->route('web.report') ?>" method="post">
+
+    <select name="user">
+
+        <?php if (is_array($users)): ?>
+            <?php foreach ($users as $user): ?>
+
+                <option value="<?= $user->id ?>"
+                    <?= $user->id == $selected_user ? 'selected' : null; ?>>
+                    <?= $user->first_name . ' ' . $user->last_name ?></option>
+
+            <?php endforeach; ?>
+        <?php else: ?>
+
+            <option value="<?= $users->id ?>"
+                <?= $users->id == $selected_user ? 'selected' : null; ?>>
+                <?= $users->first_name . ' ' . $users->last_name ?></option>
+
+        <?php endif; ?>
+
+    </select>
+
+    <select name="month">
+        <?php foreach ($months as $number => $month): ?>
+
+            <option value="<?= $number ?>"
+                <?= $number == $selected_month ? 'selected' : null; ?>><?= $month ?></option>
+
+        <?php endforeach; ?>
+    </select>
+
+    <select name="year">
+        <?php foreach ($years as $year): ?>
+
+            <option value="<?= $year ?>"
+                <?= $year == $selected_year ? 'selected' : null; ?>><?= $year ?></option>
+
+        <?php endforeach; ?>
+    </select>
+
+    <button type="submit">search</button>
+
+</form>
+
 <table>
 
     <tr>
@@ -10,35 +55,19 @@
         <th>Horas trabalhadas</th>
     </tr>
 
-    <?php if (is_object($reports)): ?>
+    <?php foreach ($report as $working_hours): ?>
 
-        <tr data-tr_href="<?= $router->route('web.report.user', ['user' => $reports->user()->id]); ?>">
-            <td><?= $reports->user()->first_name . ' ' . $reports->user()->last_name; ?></td>
-            <td><?= $reports->time1; ?></td>
-            <td><?= $reports->time2; ?></td>
-            <td><?= $reports->time3; ?></td>
-            <td><?= $reports->time4; ?></td>
-            <td><?= (new DateTime($reports->work_date))->format('d-m-Y'); ?></td>
-            <td><?= (new DateTime($reports->worked_time))->format('H:i:s'); ?></td>
-        </tr>
-
-    <?php else:
-
-        foreach ($reports as $report): ?>
-
-            <tr data-tr_href="<?= $router->route('web.report.user', ['user' => $report->user()->id]); ?>">
-                <td><?= $report->user()->first_name . ' ' . $report->user()->last_name; ?></td>
-                <td><?= $report->time1; ?></td>
-                <td><?= $report->time2; ?></td>
-                <td><?= $report->time3; ?></td>
-                <td><?= $report->time4; ?></td>
-                <td><?= (new DateTime($report->work_date))->format('d-m-Y'); ?></td>
-                <td><?= (new DateTime($report->worked_time))->format('H:i:s'); ?></td>
+            <tr data-tr_href="<?= $router->route('web.report.user', ['user' => $working_hours->user()->id]); ?>">
+                <td><?= $working_hours->user()->first_name . ' ' . $working_hours->user()->last_name; ?></td>
+                <td><?= $working_hours->time1; ?></td>
+                <td><?= $working_hours->time2; ?></td>
+                <td><?= $working_hours->time3; ?></td>
+                <td><?= $working_hours->time4; ?></td>
+                <td><?= (new DateTime($working_hours->work_date))->format('d-m-Y'); ?></td>
+                <td><?= (new DateTime($working_hours->worked_time))->format('H:i:s'); ?></td>
             </tr>
 
-        <?php endforeach;
-
-    endif ?>
+    <?php endforeach ?>
 
 </table>
 

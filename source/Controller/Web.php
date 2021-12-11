@@ -49,13 +49,34 @@ class Web extends Controller
 
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        $reports = isset($data['user']) ?
-        WorkingHours::find(['user' => $data['user'], 'sql_raw' => "work_date > '2021-12-1'"]) :
-        WorkingHours::find(['sql_raw' => "work_date > '2021-12-1'"]);
+        $date = isset($data['year']) && isset($data['month']) ?
+        $data['year'] . '-' . $data['month'] :
+        new DateTime();
+
+        $users = $this->user->is_admin ? User::find() : $this->user;
+
+        $selected_user = isset($data['user']) ? $data['user'] : $this->user->id;
+        $selected_month = isset($data['month']) ? $data['month'] : '1';
+        $selected_year = isset($data['year']) ? $data['year'] : $date->format('Y');
+        
+        if ($this->user->is_admin)
+            $report = WorkingHours::getMonthlyReport($selected_user, $date);
+        else
+            $report = WorkingHours::getMonthlyReport($this->user->id, $date);
+
+        $months = getPreviousMonthsThatDate(new DateTime());
+
+        $years = getPreviousFiveYearsThatDate(new DateTime());
 
         $this->view->load('report', [
             'page' => 'Relatório',
-            'reports' => $reports
+            'users' => $users,
+            'report' => $report,
+            'months' => $months,
+            'years' => $years,
+            'selected_user' => $selected_user,
+            'selected_month' => $selected_month,
+            'selected_year' => $selected_year
         ])
             ->render();
     }
