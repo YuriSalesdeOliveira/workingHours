@@ -36,6 +36,12 @@ body {
     margin-right: auto;
 }
 
+.flex_right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .flex_centralize {
     display: flex;
     justify-content: center;
@@ -197,6 +203,28 @@ main.main_content {
     width: var(--base_width);
     padding-top: 50px;
     box-sizing: border-box;
+}
+
+select {
+    cursor: pointer;
+    height: 40px;
+    padding: 0 5px;
+    border: 1px solid var(--medium_color_dark);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+select option {
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    cursor: pointer;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--medium_color_dark);
+    border-radius: 5px;
+    background-color: #fff;
 }
 
 table {

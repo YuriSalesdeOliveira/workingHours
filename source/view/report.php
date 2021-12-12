@@ -1,5 +1,5 @@
-
-<form action="<?php $router->route('web.report') ?>" method="post">
+<div class="flex_right">
+    <form action="<?php $router->route('web.report') ?>" method="post">
 
     <select name="user">
 
@@ -39,11 +39,12 @@
         <?php endforeach; ?>
     </select>
 
-    <button type="submit">search</button>
+    <button type="submit">buscar</button>
 
-</form>
+    </form>
+</div>
 
-<table>
+<table class="margin_top margin_bottom">
 
     <tr>
         <th>Usuário</th>

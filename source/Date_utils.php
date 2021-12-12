@@ -122,9 +122,9 @@ function populateWorkingHours(int|string $user, string|DateTime $initialDate, in
     if (!$user = User::find(['id' => $user]))
         throw new AppException('Usuário não existe na base de dados');
 
-    WorkingHours::delete([]);
+    // WorkingHours::delete([]);
 
-    while (isBeforeThatDate($work_date, new DateTime())) {
+    while (isBeforeThatDate($work_date, (new DateTime())->modify('-1 day'))) {
 
         $day_template = getDayTemplateByOdds($regularRate, $extraRate, $lazyRate);
 

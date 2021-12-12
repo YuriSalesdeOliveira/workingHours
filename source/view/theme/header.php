@@ -18,7 +18,7 @@
 
         </div>
 
-        <a class="main_header_session_logout" href="<?= url('logout') ?>">Sair</a>
+        <a class="main_header_session_logout" href="<?= $router->route('app.logout') ?>">Sair</a>
 
     </div>
 
@@ -26,7 +26,7 @@
 
 <nav class="main_header_nav">
 
-    <a title="inicio" href="<?= url('home') ?>" class="main_header_nav_item">Home</a>
-    <a title="relatório" href="<?= url('relatorio') ?>" class="main_header_nav_item">Relatório</a>
+    <a title="inicio" href="<?= $router->route('web.home') ?>" class="main_header_nav_item">Home</a>
+    <a title="relatório" href="<?= $router->route('web.report') ?>" class="main_header_nav_item">Relatório</a>
 
 </nav>
