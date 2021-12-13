@@ -30,15 +30,19 @@ class Web extends Controller
             ->render();
     }
 
-    public function users(): void
+    public function users($data): void
     {
         $this->restrict();
 
-        $users = $this->user->is_admin ? User::find() : User::find(['id' => $this->user->id]);
+        $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        $user = User::find(['id' => $data['user']]);
+
+        if (!$user) setMessage(['users' => 'Usuário não foi encontrado']);
 
         $this->view->load('users', [
             'page' => 'Usuários',
-            'users' => $users
+            'user' => $user
         ])
             ->render();
     }

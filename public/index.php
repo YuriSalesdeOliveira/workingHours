@@ -17,7 +17,8 @@ $router->namespace('Source\Controller');
 $router->group(null);
 $router->get('/', 'Web:home', 'web.home');
 $router->get('/home', 'Web:home', 'web.home');
-$router->get('/usuarios', 'Web:users', 'web.users');
+
+$router->get('/usuarios/{user}', 'Web:users', 'web.users');
 
 $router->get('/relatorio', 'Web:report', 'web.report');
 $router->post('/relatorio', 'Web:report', 'web.report');

@@ -21,6 +21,7 @@
   "require": {
     "ext-json": "*",
     "ext-pdo": "*",
-    "coffeecode/router": "1.0.8"
+    "coffeecode/router": "1.0.8",
+    "robmorgan/phinx": "^0.12.9"
   }
 }
