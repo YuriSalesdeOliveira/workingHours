@@ -82,6 +82,30 @@ function convertDateIntervalToDateTime(DateInterval $interval): DateTime
     return new DateTime($interval->format('%H:%i:%s'));
 }
 
+function convertDateTimeToDateInterval(string|DateTime $date): DateInterval
+{
+    $date = dateAsDateTime($date);
+
+    return (new DateTime('00:00:00'))->diff($date);
+}
+
+function getSecondsFromDateInterval(DateInterval $interval): int
+{
+    $date = new DateTimeImmutable();
+    $newDate = $date->add($interval);
+
+    return $newDate->getTimestamp() - $date->getTimestamp();
+}
+
+function secondsAsStringTime(string|int $seconds): string
+{
+    $hours = str_pad(intdiv($seconds, 3600), 2, 0, STR_PAD_LEFT);
+    $minutes = str_pad(intdiv($seconds % 3600, 60), 2, 0, STR_PAD_LEFT);
+    $seconds = str_pad($seconds - ($hours * 3600) - ($minutes * 60), 2, 0, STR_PAD_LEFT);
+
+    return "{$hours}:{$minutes}:{$seconds}";
+}
+
 function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): array
 {
     $regularDayTemplate = [
@@ -89,7 +113,7 @@ function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): 
         'time2' => '12:00:00',
         'time3' => '14:00:00',
         'time4' => '18:00:00',
-        'worked_time' => '08:00:00'
+        'worked_time' => DAILY_TIME
     ];
 
     $extraHourDayTemplate = [
@@ -97,7 +121,7 @@ function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): 
         'time2' => '12:00:00',
         'time3' => '14:00:00',
         'time4' => '19:00:00',
-        'worked_time' => '09:00:00'
+        'worked_time' => DAILY_TIME + 3600
     ];
 
     $lazyDayTemplate = [
@@ -105,7 +129,7 @@ function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): 
         'time2' => '12:00:00',
         'time3' => '14:00:00',
         'time4' => '18:00:00',
-        'worked_time' => '07:30:00'
+        'worked_time' => DAILY_TIME + 1800
     ];
 
     $randNumber = rand(0, 100);
@@ -117,29 +141,29 @@ function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): 
 
 function populateWorkingHours(int|string $user, string|DateTime $initialDate, int $regularRate, int $extraRate, int $lazyRate)
 {
+    $data = [];
+
     $work_date = dateAsDateTime($initialDate);
-
-    if (!$user = User::find(['id' => $user]))
-        throw new AppException('Usuário não existe na base de dados');
-
-    // WorkingHours::delete([]);
 
     while (isBeforeThatDate($work_date, (new DateTime())->modify('-1 day'))) {
 
-        $day_template = getDayTemplateByOdds($regularRate, $extraRate, $lazyRate);
+        if (!isWeekend($work_date)) {
 
-        $working_hours = new WorkingHours();
+            $day_template = getDayTemplateByOdds($regularRate, $extraRate, $lazyRate);
 
-        $working_hours->user = $user->id;
-        $working_hours->work_date = $work_date->format('Y-m-d');
-        $working_hours->time1 = $day_template['time1'];
-        $working_hours->time2 = $day_template['time2'];
-        $working_hours->time3 = $day_template['time3'];
-        $working_hours->time4 = $day_template['time4'];
-        $working_hours->worked_time = $day_template['worked_time'];
-
-        $working_hours->save();
+            $data[] = [
+                'user' => $user,
+                'work_date' => $work_date->format('Y-m-d'),
+                'time1' => $day_template['time1'],
+                'time2' => $day_template['time2'],
+                'time3' => $day_template['time3'],
+                'time4' => $day_template['time4'],
+                'worked_time' => $day_template['worked_time']
+            ];
+        }
 
         $work_date = $work_date->modify('+1 day');
     }
+
+    return $data;
 }

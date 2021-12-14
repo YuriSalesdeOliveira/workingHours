@@ -2,6 +2,7 @@
 
 namespace Source\Controller;
 
+use DateInterval;
 use Source\Model\User;
 use Source\Model\WorkingHours;
 use DateTime;
@@ -60,7 +61,7 @@ class Web extends Controller
         $users = $this->user->is_admin ? User::find() : $this->user;
 
         $selected_user = isset($data['user']) ? $data['user'] : $this->user->id;
-        $selected_month = isset($data['month']) ? $data['month'] : '1';
+        $selected_month = isset($data['month']) ? $data['month'] : $date->format('m');
         $selected_year = isset($data['year']) ? $data['year'] : $date->format('Y');
         
         if ($this->user->is_admin)
@@ -72,6 +73,22 @@ class Web extends Controller
 
         $years = getPreviousFiveYearsThatDate(new DateTime());
 
+        $sum_of_worked_time = 0;
+
+        foreach ($report as $working_hours) {
+
+            $worked_time = $working_hours->worked_time;
+
+            $sum_of_worked_time += $worked_time;
+        }
+
+        // Posso disponibilizar para o usuário selecionar
+        $monthly_time = DAILY_TIME * 22;
+
+        $balance = $sum_of_worked_time - $monthly_time;
+
+        $balanceOperator = $sum_of_worked_time > $monthly_time ? '+' : '-';
+        
         $this->view->load('report', [
             'page' => 'Relatório',
             'users' => $users,
@@ -80,7 +97,10 @@ class Web extends Controller
             'years' => $years,
             'selected_user' => $selected_user,
             'selected_month' => $selected_month,
-            'selected_year' => $selected_year
+            'selected_year' => $selected_year,
+            'sum_of_worked_time' => $sum_of_worked_time,
+            'balance' => $balance,
+            'balanceOperator' => $balanceOperator
         ])
             ->render();
     }

@@ -91,7 +91,7 @@ class WorkingHours extends Model
         }
 
         $this->$next_time = $time;
-        $this->worked_time = convertDateIntervalToDateTime($this->workedHours())->format('H:i:s');
+        $this->worked_time = getSecondsFromDateInterval($this->workedHours());
 
         parent::save();
     }

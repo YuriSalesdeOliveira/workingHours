@@ -232,18 +232,7 @@ table {
     border-collapse: collapse;
 }
 
-th {
-    user-select: none;
-    height: 50px;
-    text-align: left;
-    padding: 0 10px;
-    color: var(--medium_color_dark_variation_06);
-    background-color: var(--medium_color);
-}
-
-td {
-    height: 50px;
-    padding: 0 10px;
+tr {
     color: var(--medium_color_dark_variation_06);
 }
 
@@ -257,6 +246,21 @@ tr:hover {
 
 tr:nth-child(odd) {
     background-color: var(--medium_color_light);
+}
+
+th {
+    user-select: none;
+    height: 50px;
+    text-align: left;
+    padding: 0 10px;
+    color: inherit;
+    background-color: var(--medium_color);
+}
+
+td {
+    height: 50px;
+    padding: 0 10px;
+    color: inherit;
 }
 
 div.card {

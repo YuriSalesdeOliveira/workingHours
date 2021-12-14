@@ -16,9 +16,9 @@ abstract class DataBase
         try {
 
             return new PDO(
-                "{$db_config->driver}:host={$db_config->host};dbname={$db_config->dbname}",
-                $db_config->username,
-                $db_config->password,
+                "{$db_config->adapter}:host={$db_config->host};dbname={$db_config->name}",
+                $db_config->user,
+                $db_config->pass,
                 $db_config->options
             );
         } catch (PDOException $e) {

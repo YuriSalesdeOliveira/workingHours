@@ -65,10 +65,17 @@
                 <td><?= $working_hours->time3; ?></td>
                 <td><?= $working_hours->time4; ?></td>
                 <td><?= (new DateTime($working_hours->work_date))->format('d-m-Y'); ?></td>
-                <td><?= (new DateTime($working_hours->worked_time))->format('H:i:s'); ?></td>
+                <td><?= secondsAsStringTime($working_hours->worked_time); ?></td>
             </tr>
 
     <?php endforeach ?>
+
+        <tr style="background-color: var(--main_color_light); color: var(--light_color);">
+            <td>Total de horas trabalhas</td>
+            <td colspan="4"><?= secondsAsStringTime($sum_of_worked_time); ?></td>
+            <td>Saldo mensal</td>
+            <td><?= $balanceOperator . secondsAsStringTime($balance); ?></td>
+        </tr>
 
 </table>
 
