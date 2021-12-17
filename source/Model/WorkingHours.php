@@ -20,6 +20,23 @@ class WorkingHours extends Model
         return User::find(['id' => $this->user]);
     }
 
+    public static function getAbsentUsers()
+    {
+        $today = (new DateTime())->format('Y-m-d');
+
+        $absentUsers = User::find([
+            'sql_raw' =>
+            "is_active = 1 
+            AND id not in (
+                select user from working_hours
+                where work_date = '{$today}'
+                and time1 is not null
+            )"
+        ]);
+        
+        return $absentUsers;
+    }
+
     public static function getMonthlyReport(int|string $user, string|DateTime $date)
     {
         $report = [];

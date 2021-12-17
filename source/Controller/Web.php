@@ -54,20 +54,20 @@ class Web extends Controller
 
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        $date = isset($data['year']) && isset($data['month']) ?
-        $data['year'] . '-' . $data['month'] :
-        new DateTime();
-
         $users = $this->user->is_admin ? User::find() : $this->user;
 
+        $currentDate = new DateTime();
+
         $selected_user = isset($data['user']) ? $data['user'] : $this->user->id;
-        $selected_month = isset($data['month']) ? $data['month'] : $date->format('m');
-        $selected_year = isset($data['year']) ? $data['year'] : $date->format('Y');
+        $selected_month = isset($data['month']) ? $data['month'] : $currentDate->format('m');
+        $selected_year = isset($data['year']) ? $data['year'] : $currentDate->format('Y');
+
+        $period = "{$selected_year}-{$selected_month}-1";
         
         if ($this->user->is_admin)
-            $report = WorkingHours::getMonthlyReport($selected_user, $date);
+            $report = WorkingHours::getMonthlyReport($selected_user, $period);
         else
-            $report = WorkingHours::getMonthlyReport($this->user->id, $date);
+            $report = WorkingHours::getMonthlyReport($this->user->id, $period);
 
         $months = getPreviousMonthsThatDate(new DateTime());
 

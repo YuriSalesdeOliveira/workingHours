@@ -1,9 +1,5 @@
 <?php
 
-use Source\Exception\AppException;
-use Source\Model\User;
-use Source\Model\WorkingHours;
-
 function getPreviousFiveYearsThatDate(string|DateTime $date): array
 {
     $date = dateAsDateTime($date);
@@ -82,13 +78,6 @@ function convertDateIntervalToDateTime(DateInterval $interval): DateTime
     return new DateTime($interval->format('%H:%i:%s'));
 }
 
-function convertDateTimeToDateInterval(string|DateTime $date): DateInterval
-{
-    $date = dateAsDateTime($date);
-
-    return (new DateTime('00:00:00'))->diff($date);
-}
-
 function getSecondsFromDateInterval(DateInterval $interval): int
 {
     $date = new DateTimeImmutable();
@@ -138,7 +127,7 @@ function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): 
     if ($randNumber <= $regularRate + $extraRate) return $extraHourDayTemplate;
     if ($randNumber <= $regularRate + $extraRate + $lazyRate) return $lazyDayTemplate;
 }
-
+// Mudar o nome dessa função
 function populateWorkingHours(int|string $user, string|DateTime $initialDate, int $regularRate, int $extraRate, int $lazyRate)
 {
     $data = [];

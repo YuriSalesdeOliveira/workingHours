@@ -17,15 +17,16 @@ define('SITE', [
     'root' => 'http://localhost/working_hours/public'
 ]);
 
-$phinx = (require_once(dirname(__DIR__) . '/phinx.php'));
 
-$phinx_environments = $phinx['environments'];
 
-$default_environment = $phinx_environments['default_environment'];
-
-$data_base_config = $phinx_environments[$default_environment];
-
-define('DATA_BASE_CONFIG',$data_base_config + [
+define('DATA_BASE_CONFIG',[
+    'driver' => 'mysql',
+    'host' => 'db',
+    'port' => '3306',
+    'dbname' => 'working_hours',
+    'charset' => 'utf8',
+    'username' => 'root',
+    'password' => 'root',
     'options' => [
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
