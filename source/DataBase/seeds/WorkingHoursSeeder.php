@@ -14,9 +14,9 @@ class WorkingHoursSeeder extends AbstractSeed
 
     public function run()
     {
-        $dataUser01 = populateWorkingHours('1', '2021-10-01', 50, 40, 10);
-        $dataUser02 = populateWorkingHours('2', '2021-10-01', 20, 20, 60);
-        $dataUser03 = populateWorkingHours('3', '2021-10-01', 50, 50, 0);
+        $dataUser01 = generateWorkingHours('1', '2021-10-01', 50, 40, 10);
+        $dataUser02 = generateWorkingHours('2', '2021-10-01', 20, 20, 60);
+        $dataUser03 = generateWorkingHours('3', '2021-10-01', 50, 50, 0);
 
         $data = array_merge($dataUser01, $dataUser02, $dataUser03);
 

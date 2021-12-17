@@ -128,7 +128,7 @@ function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): 
     if ($randNumber <= $regularRate + $extraRate + $lazyRate) return $lazyDayTemplate;
 }
 // Mudar o nome dessa função
-function populateWorkingHours(int|string $user, string|DateTime $initialDate, int $regularRate, int $extraRate, int $lazyRate)
+function generateWorkingHours(int|string $user, string|DateTime $initialDate, int $regularRate, int $extraRate, int $lazyRate)
 {
     $data = [];
 
