@@ -11,6 +11,11 @@ class User extends Model
         'timestamp' => true
     ];
 
+    public static function getActiveUsers()
+    {
+        return static::find(['is_active' => '1']);
+    }
+
     private function validation(): void
     {
         $validation = new Validation($this->attributes);

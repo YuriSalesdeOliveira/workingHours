@@ -63,7 +63,7 @@ class Web extends Controller
         $selected_year = isset($data['year']) ? $data['year'] : $currentDate->format('Y');
 
         $period = "{$selected_year}-{$selected_month}-1";
-        
+
         if ($this->user->is_admin)
             $report = WorkingHours::getMonthlyReport($selected_user, $period);
         else
@@ -101,6 +101,36 @@ class Web extends Controller
             'sum_of_worked_time' => $sum_of_worked_time,
             'balance' => $balance,
             'balanceOperator' => $balanceOperator
+        ])
+            ->render();
+    }
+
+    public function managerReport($data)
+    {
+        $this->restrict();
+
+        $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        $activeUsers = User::getActiveUsers();
+        $activeUsersCount = User::getCount(['is_active' => '1']);
+        $absentUsers = WorkingHours::getAbsentUsers();
+
+        $currentDate = new DateTime();
+        $selected_month = isset($data['month']) ? $data['month'] : $currentDate->format('m');
+        $selected_year = isset($data['year']) ? $data['year'] : $currentDate->format('Y');
+
+        $period = "{$selected_year}-{$selected_month}-1";
+
+        $sum_of_worked_time_in_month = WorkingHours::getWorkedTimeInMonth($period);
+
+
+        $this->view->load('managerReport', [
+            'activeUsers' => $activeUsers,
+            'activeUsersCount' => $activeUsersCount,
+            'absentUsers' => $absentUsers,
+            'selected_month' => $selected_month,
+            'selected_year' => $selected_year,
+            'sum_of_worked_time_in_month' => $sum_of_worked_time_in_month
         ])
             ->render();
     }

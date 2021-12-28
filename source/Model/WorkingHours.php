@@ -58,6 +58,18 @@ class WorkingHours extends Model
         return $report;
     }
 
+    public static function getWorkedTimeInMonth(string|DateTime $date)
+    {
+        $date = dateAsDateTime($date);
+
+        $firstDate = $date->modify('first day of this month')->format('Y-m-d');
+        $lastDate = $date->modify('last day of this month')->format('Y-m-d');
+
+        return static::find([
+            'sql_raw' => "work_date between '{$firstDate}' and '{$lastDate}'",
+        ], 'sum(worked_time) as sumOfWorkedTime');
+    }
+
     public static function workingHours($user, string $work_date): WorkingHours
     {
         $working_hours = self::find(['user' => $user, 'work_date' => $work_date]);

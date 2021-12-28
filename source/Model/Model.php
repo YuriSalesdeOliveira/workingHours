@@ -108,6 +108,11 @@ abstract class Model extends DataBase
         return false;
     }
 
+    public static function getCount(array $filters = [])
+    {
+        return static::find($filters, 'count(*) as count');
+    }
+
     public static function find(array $filters = [], string $columns = '*')
     {
         $stmt = self::getResultFromSelect($filters, $columns);
