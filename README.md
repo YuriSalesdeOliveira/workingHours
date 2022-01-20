@@ -1,2 +1,2 @@
-# Working hours
+# WorkingHours
 Aplicação para registro de pontos
