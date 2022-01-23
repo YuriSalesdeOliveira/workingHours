@@ -14,10 +14,8 @@ define('SITE', [
     'description' => 'Um sistema de bater ponto',
     'domain' => '',
     'locale' => 'pt_BR',
-    'root' => 'http://localhost/working_hours/public'
+    'root' => 'http://localhost/workingHours/public'
 ]);
-
-
 
 define('DATA_BASE_CONFIG',[
     'driver' => 'mysql',

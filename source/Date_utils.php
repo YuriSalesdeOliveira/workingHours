@@ -92,7 +92,7 @@ function secondsAsStringTime(string|int $seconds): string
     $minutes = str_pad(intdiv($seconds % 3600, 60), 2, 0, STR_PAD_LEFT);
     $seconds = str_pad($seconds - ($hours * 3600) - ($minutes * 60), 2, 0, STR_PAD_LEFT);
 
-    return "{$hours}:{$minutes}:{$seconds}";
+    return preg_replace('/[-]/', "", "{$hours}:{$minutes}:{$seconds}");
 }
 
 function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): array

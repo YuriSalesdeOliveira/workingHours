@@ -87,7 +87,7 @@ class Web extends Controller
 
         $balance = $sum_of_worked_time - $monthly_time;
 
-        $balanceOperator = $sum_of_worked_time > $monthly_time ? '+' : '-';
+        $balanceOperator = $sum_of_worked_time >= $monthly_time ? '+' : '-';
         
         $this->view->load('report', [
             'page' => 'Relatório',
