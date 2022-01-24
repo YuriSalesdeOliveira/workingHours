@@ -28,5 +28,10 @@
 
     <a title="inicio" href="<?= $router->route('web.home') ?>" class="main_header_nav_item">Home</a>
     <a title="relatório" href="<?= $router->route('web.report') ?>" class="main_header_nav_item">Relatório</a>
+    <?php if($user->is_admin): ?>
+        <a title="relatório" href="<?= $router->route('web.managerReport') ?>"
+            class="main_header_nav_item">Relatório Gerencial</a>
+    <?php endif ?>
+    <a title="perfil" href="<?= $router->route('web.profile') ?>" class="main_header_nav_item">Perfil</a>
 
 </nav>

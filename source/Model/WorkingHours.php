@@ -67,7 +67,7 @@ class WorkingHours extends Model
 
         return static::find([
             'sql_raw' => "work_date between '{$firstDate}' and '{$lastDate}'",
-        ], 'sum(worked_time) as sumOfWorkedTime');
+        ], 'sum(worked_time) as sumOfWorkedTime')->sumOfWorkedTime;
     }
 
     public static function workingHours($user, string $work_date): WorkingHours

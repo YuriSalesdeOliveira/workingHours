@@ -107,13 +107,14 @@ class Web extends Controller
 
     public function managerReport($data)
     {
-        $this->restrict();
+        $this->restrict(admin: true);
 
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
         $activeUsers = User::getActiveUsers();
-        $activeUsersCount = User::getCount(['is_active' => '1']);
+        $activeUsersCount = count($activeUsers);
         $absentUsers = WorkingHours::getAbsentUsers();
+        $absentUsersCount = count($absentUsers);
 
         $currentDate = new DateTime();
         $selected_month = isset($data['month']) ? $data['month'] : $currentDate->format('m');
@@ -128,9 +129,18 @@ class Web extends Controller
             'activeUsers' => $activeUsers,
             'activeUsersCount' => $activeUsersCount,
             'absentUsers' => $absentUsers,
+            'absentUsersCount' => $absentUsersCount,
             'selected_month' => $selected_month,
             'selected_year' => $selected_year,
             'sum_of_worked_time_in_month' => $sum_of_worked_time_in_month
+        ])
+            ->render();
+    }
+
+    public function profile()
+    {
+        $this->view->load('profile', [
+            
         ])
             ->render();
     }
@@ -166,11 +176,16 @@ class Web extends Controller
             ->render();
     }
 
-    private function restrict(): void
+    private function restrict($admin = false): void
     {
         if (!$this->user) {
 
             $this->router->redirect('web.login');
+        }
+
+        if ($admin && !$this->user->is_admin) {
+
+            $this->router->redirect('web.home');
         }
     }
 }
