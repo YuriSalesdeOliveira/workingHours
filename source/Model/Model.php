@@ -140,11 +140,11 @@ abstract class Model extends DataBase
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $class = get_called_class();
+        $objects = [];
 
-        foreach ($rows as $row) {
-
-            $objects[] = new $class($row);
+        if ($rows)
+        {   
+            foreach ($rows as $row) { array_push($objects, new static($row)); }
         }
 
         return $objects;

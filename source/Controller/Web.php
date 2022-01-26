@@ -112,6 +112,8 @@ class Web extends Controller
 
         $activeUsers = User::getActiveUsers();
         $activeUsersCount = count($activeUsers);
+        $inactiveUsers = User::getInactiveUsers();
+        $inactiveUsersCount = count($inactiveUsers);
         $absentUsers = WorkingHours::getAbsentUsers();
         $absentUsersCount = count($absentUsers);
 
@@ -128,6 +130,8 @@ class Web extends Controller
             'page' => 'Relatório Gerencial',
             'activeUsers' => $activeUsers,
             'activeUsersCount' => $activeUsersCount,
+            'inactiveUsers' => $inactiveUsers,
+            'inactiveUsersCount' => $inactiveUsersCount,
             'absentUsers' => $absentUsers,
             'absentUsersCount' => $absentUsersCount,
             'selected_month' => $selected_month,

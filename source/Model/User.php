@@ -13,12 +13,12 @@ class User extends Model
 
     public static function getActiveUsers()
     {
-        return static::find(['is_active' => '1']);
+        return static::fetch(['is_active' => '1']);
     }
 
     public static function getInactiveUsers()
     {
-        return static::find(['is_active' => '0']);
+        return static::fetch(['is_active' => '0']);
     }
 
     private function validation(): void

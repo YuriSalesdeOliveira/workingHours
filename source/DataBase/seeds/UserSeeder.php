@@ -29,6 +29,14 @@ class UserSeeder extends AbstractSeed
                 'email' => 'cap@hotmail.com',
                 'password' => password_hash('nomedamamae', PASSWORD_DEFAULT),
                 'is_admin' => 1
+            ],
+            [
+                'id' => 4,
+                'first_name' => 'Gabi',
+                'last_name' => 'Gol',
+                'email' => 'flamengo@hotmail.com',
+                'password' => password_hash('nomedamamae', PASSWORD_DEFAULT),
+                'is_active' => 0
             ]
         ];
 

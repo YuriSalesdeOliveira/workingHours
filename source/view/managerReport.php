@@ -13,6 +13,19 @@
 
 <div>
 
+    <h3>Usuários desligados (<?= $inactiveUsersCount ?>):</h3>
+    <?php foreach($inactiveUsers as $user): ?>
+    <div>
+        <span>nome: <?= $user->first_name ?></span> |
+        <span>sobrenome: <?= $user->last_name ?></span> |
+        <span>admin: <?= $user->is_admin ?></span>
+    </div>
+    <?php endforeach; ?>
+
+</div>
+
+<div>
+
     <h3>Usuários ausentes (<?= $absentUsersCount ?>):</h3>
     <?php foreach($absentUsers as $user): ?>
     <div>

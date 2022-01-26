@@ -24,7 +24,7 @@ class WorkingHours extends Model
     {
         $today = (new DateTime())->format('Y-m-d');
 
-        $absentUsers = User::find([
+        $absentUsers = User::fetch([
             'sql_raw' =>
             "is_active = 1 
             AND id not in (
