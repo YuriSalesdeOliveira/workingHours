@@ -10,7 +10,7 @@ class UserSeeder extends AbstractSeed
             [
                 'id' => 1,
                 'first_name' => 'Yuri',
-                'last_name' => 'Oliveira',  
+                'last_name' => 'Oliveira',
                 'email' => 'yuri_oli@hotmail.com',
                 'password' => password_hash('nomedamamae', PASSWORD_DEFAULT),
                 'is_admin' => 1

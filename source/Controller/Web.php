@@ -2,7 +2,6 @@
 
 namespace Source\Controller;
 
-use DateInterval;
 use Source\Model\User;
 use Source\Model\WorkingHours;
 use DateTime;
@@ -105,7 +104,7 @@ class Web extends Controller
             ->render();
     }
 
-    public function managerReport($data)
+    public function managerReport($data): void
     {
         $this->restrict(admin: true);
 
@@ -126,6 +125,7 @@ class Web extends Controller
 
 
         $this->view->load('managerReport', [
+            'page' => 'Relatório Gerencial',
             'activeUsers' => $activeUsers,
             'activeUsersCount' => $activeUsersCount,
             'absentUsers' => $absentUsers,
@@ -137,10 +137,12 @@ class Web extends Controller
             ->render();
     }
 
-    public function profile()
+    public function profile(): void
     {
+        $this->restrict();
+
         $this->view->load('profile', [
-            
+            'page' => 'Perfil'
         ])
             ->render();
     }

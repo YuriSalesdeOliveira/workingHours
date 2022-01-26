@@ -23,6 +23,22 @@ body {
     height: 100%;
 }
 
+.width_100 {
+    width: 100%;
+}
+
+.width_75 {
+    width: 75%;
+}
+
+.width_50 {
+    width: 50%;
+}
+
+.width_35 {
+    width: 35%;
+}
+
 .margin_top {
     margin-top: 50px;
 }

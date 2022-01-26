@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="<?= asset('css/font.css') ?>">
     <link rel="stylesheet" href="<?= asset('css/color.css') ?>">
     <link rel="stylesheet" href="<?= asset('css/button.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/form.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/message.css') ?>">
     <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
     <title>Working Hours - <?= $page ?></title>
 </head>

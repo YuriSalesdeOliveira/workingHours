@@ -47,6 +47,7 @@ $router->get('/logout', 'App:logout', 'app.logout');
 $router->group(null);
 $router->post('/login', 'Auth:login', 'auth.login');
 $router->post('/registrar', 'Auth:register', 'auth.register');
+$router->post('/editar', 'Auth:update', 'auth.update');
 
 /*
  * ERROR
