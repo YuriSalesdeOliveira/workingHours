@@ -129,7 +129,7 @@
 
                 <a href="<?= url('toclockin') ?>" class="button primary">Bater Ponto</a>
 
-                <?php if ('true'):
+                <?php if ($user->is_admin):
 
                     ?><a href="javascript:" class="button_modal button secondary">Bater Ponto Forçado</a>
                 <?php

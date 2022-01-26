@@ -39,7 +39,7 @@
         <?php endforeach; ?>
     </select>
 
-    <button type="submit">buscar</button>
+    <button type="submit">Buscar</button>
 
     </form>
 </div>

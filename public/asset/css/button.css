@@ -23,7 +23,7 @@
 
 .button.large {
     font-size: 1rem;
-    padding: 5px 10px;
+    padding: 10px;
 }
 
 .button.fa_1x {
@@ -54,5 +54,17 @@
 .button.secondary:hover {
     transition: all linear .2s;
     background-color: var(--accent_color_dark);
+}
+
+.button.trasnparent {
+    color: black;
+    border: 1px solid var(--medium_color_dark);
+    border-radius: 3px;
+    background-color: transparent;
+}
+
+.button.trasnparent:hover {
+    transition: all linear .2s;
+    background-color: var(--medium_color);
 }
 

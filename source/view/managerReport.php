@@ -1,5 +1,4 @@
-
-<div>
+<div class="margin_top">
 
     <h3>Usuários ativos (<?= $activeUsersCount ?>):</h3>
     <?php foreach($activeUsers as $user): ?>

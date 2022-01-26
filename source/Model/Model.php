@@ -134,6 +134,23 @@ abstract class Model extends DataBase
         return $rows ? new $class($rows[0]) : null;
     }
 
+    public static function fetch(array $filters = [], string $columns = '*')
+    {
+        $stmt = self::getResultFromSelect($filters, $columns);
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $class = get_called_class();
+
+        foreach ($rows as $row) {
+
+            $objects[] = new $class($row);
+        }
+
+        return $objects;
+    }
+
+
     protected static function getResultFromSelect(array $filters = [], string $columns = '*'): object
     {
         $sql = "SELECT {$columns} FROM " . static::$entity . self::placeholder('WHERE', $filters);
