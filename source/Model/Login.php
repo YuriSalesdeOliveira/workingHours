@@ -30,7 +30,12 @@ class Login extends Model
         if ($user) {
             if (password_verify($this->password, $user->password)) {
 
-                return $user;
+                if ($user->is_active)
+                {
+                    return $user;
+                }
+
+                throw new AppException('Esse usuário está desligado.');
             }
         }
 

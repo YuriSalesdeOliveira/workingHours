@@ -1,5 +1,5 @@
 <div class="flex_right">
-    <a href="#" class="button trasnparent large margin_right_5">Trocar Senha</a>
+    <a href="<?= $router->route('web.changePassword') ?>" class="button trasnparent large margin_right_5">Trocar Senha</a>
     <a href="<?= $router->route('app.logout') ?>" class="button trasnparent large">Sair</a>
 </div>
 

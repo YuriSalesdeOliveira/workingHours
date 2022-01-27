@@ -8,6 +8,14 @@ class Validation extends Model
 {
     private $errors;
 
+    public function validation(callable $callback)
+    {
+        if (is_array($error = $callback()))
+        {
+            $this->setError(...$error);
+        }
+    }
+
     public function require(array $attributes = []): Validation
     {
         if ($attributes) {

@@ -28,6 +28,8 @@ $router->post('/relatorio-gerencial', 'Web:managerReport', 'web.managerReport');
 
 $router->get('/perfil', 'Web:profile', 'web.profile');
 
+$router->get('/mudar-senha', 'Web:changePassword', 'web.changePassword');
+
 $router->get('/login', 'Web:login', 'web.login');
 $router->get('/registrar', 'Web:register', 'web.register');
 
@@ -36,8 +38,8 @@ $router->get('/registrar', 'Web:register', 'web.register');
  */
 
 $router->group(null);
-$router->get('/toclockin', 'App:toClockIn', 'app.toClockIn');
-$router->post('/toclockin', 'App:toClockIn', 'app.toClockIn');
+$router->get('/to-clock-in', 'App:toClockIn', 'app.toClockIn');
+$router->post('/to-clock-in', 'App:toClockIn', 'app.toClockIn');
 $router->get('/logout', 'App:logout', 'app.logout');
 
 /*
@@ -48,6 +50,7 @@ $router->group(null);
 $router->post('/login', 'Auth:login', 'auth.login');
 $router->post('/registrar', 'Auth:register', 'auth.register');
 $router->post('/editar', 'Auth:update', 'auth.update');
+$router->post('/mudar-senha', 'Auth:changePassword', 'auth.changePassword');
 
 /*
  * ERROR

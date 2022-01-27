@@ -7,7 +7,6 @@ use Source\Exception\AppException;
 use Source\Exception\ValidationException;
 use Source\Model\Login;
 use Source\Model\User;
-use Symfony\Component\Console\Event\ConsoleEvent;
 
 class Auth extends Controller
 {
@@ -87,9 +86,7 @@ class Auth extends Controller
             
             $user->save();
             
-            setMessage(['update_success' => 'Dados do usuário atualizado'], 'success');
-
-            $this->router->redirect('web.profile');
+            setMessage(['update_success' => 'Senha atualizada.'], 'success');
 
         } catch (ValidationException $e) {
 
@@ -102,6 +99,60 @@ class Auth extends Controller
         } finally {
 
             $this->router->redirect('web.profile');
+        }
+    }
+
+    public function changePassword($data)
+    {
+        $data =  filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        try {
+
+            if (empty($data['password']) || empty($data['new_password']))
+            {
+                throw new AppException('Informe a senha atual e a nova senha.');
+            }
+
+            $id = $this->user->id;
+
+            $is_admin = $this->user->is_admin;
+
+            if (isset($data['id']))
+            {
+                if (!$is_admin) { return; }
+
+                $id = $data['id'];
+            }
+
+            $user = User::find(['id' => $id]);
+
+            if ($user)
+            {
+                $password_protection = isset($data['id']) ? $this->user->password : $user->password;
+
+                if (!password_verify($data['password'], $password_protection))
+                {
+                    throw new AppException('A senha informada não está correta.');
+                }
+                
+                $user->password = $data['new_password'];
+
+                $user->save();
+
+                setMessage(['changePassword_success' => 'Senha atualizada.'], 'success');
+            }
+
+        } catch (ValidationException $e) {
+
+            setMessage($e->getErrors());
+
+        } catch (AppException $e) {
+
+            setMessage(['changePassword_error' => $e->getMessage()]);
+
+        } finally {
+
+            $this->router->redirect('web.changePassword');
         }
     }
 }

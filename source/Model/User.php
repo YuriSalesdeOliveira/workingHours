@@ -45,6 +45,8 @@ class User extends Model
     {
         $this->validation();
 
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+
         return parent::save();
     }
 }

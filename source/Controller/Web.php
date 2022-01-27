@@ -151,6 +151,14 @@ class Web extends Controller
             ->render();
     }
 
+    public function changePassword()
+    {
+        $this->view->load('changePassword', [
+            'page' => 'Mudar Senha',
+        ])
+            ->render();
+    }
+
     public function login(): void
     {
         $this->view->layout(null);
