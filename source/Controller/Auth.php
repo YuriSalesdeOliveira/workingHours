@@ -54,9 +54,13 @@ class Auth extends Controller
             $user->email = $data['email'];
             $user->password = $data['password'];
 
+            if ($this->user->is_admin && isset($data['is_admin'])) { $user->is_admin = 1; }
+
             $user->save();
 
-            $this->router->redirect('web.home');
+            setMessage(['register_success' => 'Usuário cadastrado.'], 'success');
+
+            $this->router->redirect('web.register');
 
         } catch (ValidationException $e) {
 
@@ -64,7 +68,7 @@ class Auth extends Controller
 
         } catch (AppException $e) {
 
-            setMessage(['login_error' => $e->getMessage()]);
+            setMessage(['register_error' => $e->getMessage()]);
 
         } finally {
 

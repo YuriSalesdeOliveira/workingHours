@@ -76,6 +76,11 @@ body {
     margin-right: auto;
 }
 
+.cursor_pointer
+{
+    cursor: pointer;
+}
+
 .flex_right {
     display: flex;
     justify-content: flex-end;

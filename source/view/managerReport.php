@@ -1,3 +1,9 @@
+<div class="flex_right">
+    <a href="<?= '#' ?>" class="button trasnparent large margin_right_5">Ativar</a>
+    <a href="<?= $router->route('web.register') ?>" class="button trasnparent large margin_right_5">Cadastrar</a>
+    <a href="<?= '#' ?>" class="button trasnparent large">Editar</a>
+</div>
+
 <div class="margin_top">
 
     <h3>Usuários ativos (<?= $activeUsersCount ?>):</h3>

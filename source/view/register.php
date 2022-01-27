@@ -1,33 +1,39 @@
-<form action="<?= url('registrar') ?>" method="post">
+<form class="form width_35 centralize" action="<?= $router->route('auth.register') ?>" method="post">
 
-    <div class="form_group">
+    <?= getMessage('register_success'); ?>
+    <?= getMessage('register_error'); ?>
+        
 
-        <label for="first_name">Primeiro Nome</label>
-        <input type="text" name="first_name">
+    <label for="first_name">Primeiro Nome</label>
+    <input class="input" type="text" name="first_name">
 
-    </div>
+    <?= getMessage('first_name'); ?>
 
-    <div class="form_group">
+    <label for="last_name">Último Nome</label>
+    <input class="input" type="text" name="last_name">
 
-        <label for="last_name">Último Nome</label>
-        <input type="text" name="last_name">
+    <?= getMessage('last_name'); ?>
 
-    </div>
+    <label for="email">E-mail</label>
+    <input class="input" type="text" name="email">
 
-    <div class="form_group">
+    <?= getMessage('email'); ?>
 
-        <label for="email">E-mail</label>
-        <input type="text" name="email">
+    <label for="password">Senha</label>
+    <input class="input" type="password" name="password">
 
-    </div>
+    <?= getMessage('password'); ?>
 
-    <div class="form_group">
+    <?php if($user->is_admin): ?>
+        
+        <label for="is_admin">Admin</label>
+        <input class="cursor_pointer" type="checkbox" name="is_admin">
 
-        <label for="password">Senha</label>
-        <input type="password" name="password">
+        <?= getMessage('is_admin'); ?>
+        
+    <?php endif ?>
+    
 
-    </div>
-
-    <button>Cadastrar</button>
+    <button class="button primary margin_top" type="submit">Cadastrar</button>
 
 </form>
