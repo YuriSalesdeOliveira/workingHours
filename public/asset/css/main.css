@@ -81,6 +81,16 @@ body {
     cursor: pointer;
 }
 
+.flex_left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.flex-wrap
+{
+    flex-wrap: wrap;
+}
+
 .flex_right {
     display: flex;
     justify-content: flex-end;

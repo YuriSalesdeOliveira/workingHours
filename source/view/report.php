@@ -58,7 +58,7 @@
 
     <?php foreach ($report as $working_hours): ?>
 
-            <tr data-tr_href="<?= $router->route('web.users', ['user' => $working_hours->user()->id]); ?>">
+            <tr>
                 <td><?= $working_hours->user()->first_name . ' ' . $working_hours->user()->last_name; ?></td>
                 <td><?= $working_hours->time1; ?></td>
                 <td><?= $working_hours->time2; ?></td>
@@ -78,5 +78,3 @@
         </tr>
 
 </table>
-
-<?php $v->addScripts(['tr_href' => asset('js/tr_href.js')]); ?>

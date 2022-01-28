@@ -18,7 +18,7 @@ $router->group(null);
 $router->get('/', 'Web:home', 'web.home');
 $router->get('/home', 'Web:home', 'web.home');
 
-$router->get('/usuarios/{user}', 'Web:users', 'web.users');
+$router->get('/usuarios/{user}', 'Web:update', 'web.update');
 
 $router->get('/relatorio', 'Web:report', 'web.report');
 $router->post('/relatorio', 'Web:report', 'web.report');
@@ -28,7 +28,7 @@ $router->post('/relatorio-gerencial', 'Web:managerReport', 'web.managerReport');
 
 $router->get('/perfil', 'Web:profile', 'web.profile');
 
-$router->get('/mudar-senha', 'Web:changePassword', 'web.changePassword');
+$router->get('/mudar-senha/{user}', 'Web:changePassword', 'web.changePassword');
 
 $router->get('/login', 'Web:login', 'web.login');
 $router->get('/registrar', 'Web:register', 'web.register');
@@ -50,7 +50,9 @@ $router->group(null);
 $router->post('/login', 'Auth:login', 'auth.login');
 $router->post('/registrar', 'Auth:register', 'auth.register');
 $router->post('/editar', 'Auth:update', 'auth.update');
-$router->post('/mudar-senha', 'Auth:changePassword', 'auth.changePassword');
+$router->post('/mudar-senha/{user}', 'Auth:changePassword', 'auth.changePassword');
+$router->get('/alternar-admin/{user}', 'Auth:toggleAdmin', 'auth.toggleAdmin');
+$router->get('/alternar-ativado/{user}', 'Auth:toggleActive', 'auth.toggleActive');
 
 /*
  * ERROR

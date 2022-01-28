@@ -33,7 +33,7 @@ class Auth extends Controller
 
         } catch (AppException $e) {
 
-            setMessage(['login_error' => $e->getMessage()]);
+            setMessage(['login' => $e->getMessage()]);
 
         } finally {
 
@@ -52,13 +52,15 @@ class Auth extends Controller
             $user->first_name = $data['first_name'];
             $user->last_name = $data['last_name'];
             $user->email = $data['email'];
-            $user->password = $data['password'];
-
+            if (!empty($data['password']))
+            {
+                $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+            }
             if ($this->user->is_admin && isset($data['is_admin'])) { $user->is_admin = 1; }
 
             $user->save();
 
-            setMessage(['register_success' => 'Usuário cadastrado.'], 'success');
+            setMessage(['register' => 'Usuário cadastrado.'], 'success');
 
             $this->router->redirect('web.register');
 
@@ -68,7 +70,7 @@ class Auth extends Controller
 
         } catch (AppException $e) {
 
-            setMessage(['register_error' => $e->getMessage()]);
+            setMessage(['register' => $e->getMessage()]);
 
         } finally {
 
@@ -81,16 +83,30 @@ class Auth extends Controller
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
         try {
+            
+            if (isset($data['id']) && !$this->user->is_admin)
+            {
+                $this->router->redirect('web.home');
+            }
 
-            $user = User::find(['id' => $this->user->id]);
+            $id = isset($data['id']) ? $data['id'] : $this->user->id;
+
+            $user = User::find(['id' => $id]);
             
-            $user->first_name = $data['first_name'];
-            $user->last_name = $data['last_name'];
-            $user->email = $data['email'];
-            
-            $user->save();
-            
-            setMessage(['update_success' => 'Senha atualizada.'], 'success');
+            if ($user)
+            {
+                $user->first_name = $data['first_name'];
+                $user->last_name = $data['last_name'];
+                $user->email = $data['email'];
+                
+                $user->save();
+                
+                setMessage(['update' => 'Usuário atualizado.'], 'success');
+
+                $this->router->redirect('web.update', ['user' => $id]);
+            }
+
+            throw new AppException('Não foi possivel editar esse usuário.');
 
         } catch (ValidationException $e) {
 
@@ -98,11 +114,11 @@ class Auth extends Controller
 
         } catch (AppException $e) {
 
-            setMessage(['update_error' => $e->getMessage()]);
+            setMessage(['update' => $e->getMessage()]);
 
         } finally {
 
-            $this->router->redirect('web.profile');
+            $this->router->redirect('web.update', ['user' => $id]);
         }
     }
 
@@ -117,34 +133,30 @@ class Auth extends Controller
                 throw new AppException('Informe a senha atual e a nova senha.');
             }
 
-            $id = $this->user->id;
-
-            $is_admin = $this->user->is_admin;
-
-            if (isset($data['id']))
+            if ($data['user'] != $this->user->id && !$this->user->is_admin)
             {
-                if (!$is_admin) { return; }
-
-                $id = $data['id'];
+                $this->router->redirect('web.home');
             }
 
-            $user = User::find(['id' => $id]);
+            $user = User::find(['id' => $data['user']]);
 
             if ($user)
             {
-                $password_protection = isset($data['id']) ? $this->user->password : $user->password;
-
-                if (!password_verify($data['password'], $password_protection))
+                if (!password_verify($data['password'], $this->user->password))
                 {
                     throw new AppException('A senha informada não está correta.');
                 }
                 
-                $user->password = $data['new_password'];
+                $user->password = password_hash($data['new_password'], PASSWORD_DEFAULT);
 
                 $user->save();
 
-                setMessage(['changePassword_success' => 'Senha atualizada.'], 'success');
+                setMessage(['changePassword' => 'Senha atualizada.'], 'success');
+
+                $this->router->redirect('web.changePassword', ['user' => $data['user']]);
             }
+
+            throw new AppException('Não foi possivel alterar a senha');
 
         } catch (ValidationException $e) {
 
@@ -152,11 +164,107 @@ class Auth extends Controller
 
         } catch (AppException $e) {
 
-            setMessage(['changePassword_error' => $e->getMessage()]);
+            setMessage(['changePassword' => $e->getMessage()]);
 
         } finally {
 
-            $this->router->redirect('web.changePassword');
+            $this->router->redirect('web.changePassword', ['user' => $data['user']]);
+        }
+    }
+
+    public function toggleAdmin($data)
+    {
+        $data =  filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        try 
+        {
+            if (!isset($data['user']) || !$this->user->is_admin)
+            {
+                throw new AppException('Não foi possivel tornar esse usuário um admin.');
+            }
+
+            if ($data['user'] == $this->user->id)
+            {
+                throw new AppException('Essa ação não é permitida.');
+            }
+
+            $user = User::find(['id' => $data['user']]);
+
+            if ($user)
+            {
+                $is_admin = $user->is_admin;
+
+                $user->is_admin = $is_admin ? 0 : 1;
+
+                $user->save();
+
+                $is_admin_string = $user->is_admin ? 'é' : 'não é';
+
+                setMessage(
+                    ['toggle_admin' => "O usuário {$user->first_name} {$is_admin_string} um admin"]
+                    , 'success'
+                );
+
+                $this->router->redirect('web.update', ['user' => $data['user']]);
+            }
+
+            throw new AppException('Não foi possivel tornar esse usuário um admin.');
+
+        } catch (AppException $e)
+        {
+            setMessage(['toggle_admin' => $e->getMessage()]);
+
+        } finally
+        {
+            $this->router->redirect('web.update', ['user' => $data['user']]);
+        }
+    }
+
+    public function toggleActive($data)
+    {
+        $data =  filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        try 
+        {
+            if (!isset($data['user']) || !$this->user->is_admin)
+            {
+                throw new AppException('Não foi possivel ativar esse usuário.');
+            }
+
+            if ($data['user'] == $this->user->id)
+            {
+                throw new AppException('Essa ação não é permitida.');
+            }
+
+            $user = User::find(['id' => $data['user']]);
+
+            if ($user)
+            {
+                $is_active = $user->is_active;
+
+                $user->is_active = $is_active ? 0 : 1;
+
+                $user->save();
+
+                $is_active_string = $user->is_active ? 'ativo' : 'desligado';
+
+                setMessage(
+                    ['toggle_active' => "O usuário {$user->first_name} está {$is_active_string}"],
+                    'success'
+                );
+
+                $this->router->redirect('web.update', ['user' => $data['user']]);
+            }
+
+            throw new AppException('Não foi possivel ativar esse usuário.');
+
+        } catch (AppException $e)
+        {
+            setMessage(['toggle_active' => $e->getMessage()]);
+
+        } finally
+        {
+            $this->router->redirect('web.update', ['user' => $data['user']]);
         }
     }
 }

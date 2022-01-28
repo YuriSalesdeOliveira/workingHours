@@ -36,7 +36,7 @@ class User extends Model
 
         $validation->min(['password' => 8]);
 
-        $validation->require();
+        $validation->require(static::$columns['require']);
 
         $validation->throwErrors();
     }
@@ -44,8 +44,6 @@ class User extends Model
     public function save(): bool
     {
         $this->validation();
-
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
         return parent::save();
     }

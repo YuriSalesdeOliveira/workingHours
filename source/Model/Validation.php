@@ -16,27 +16,19 @@ class Validation extends Model
         }
     }
 
-    public function require(array $attributes = []): Validation
+    public function require(array $attributes): Validation
     {
         if ($attributes) {
 
             foreach ($attributes as $key) {
 
-                if (empty($this->$key)) {
+                if (!in_array($key, array_keys($this->attributes)) || empty($this->$key)) {
 
                     $this->setError($key, 'Esse campo é obrigatório.');
                 }
             }
 
             return $this;
-        }
-
-        foreach ($this->attributes as $key => $value) {
-
-            if (empty($value)) {
-
-                $this->setError($key, 'Esse campo é obrigatório.');
-            }
         }
 
         return $this;
@@ -61,7 +53,7 @@ class Validation extends Model
     {
         foreach ($attributes as $key) {
 
-            if (!filter_var($this->$key, FILTER_VALIDATE_EMAIL)) {
+            if (isset($this->$key) && !filter_var($this->$key, FILTER_VALIDATE_EMAIL)) {
 
                 $this->setError($key, 'O valor digitado não é um email válido.');
             }
@@ -74,7 +66,7 @@ class Validation extends Model
     {
         foreach ($attributes as $key => $max) {
 
-            if (strlen($this->$key) > $max) {
+            if (isset($this->$key) && strlen($this->$key) > $max) {
 
                 $this->setError($key, "Esse campo deve conter no máximo {$max} caracteres.");
             }
@@ -87,7 +79,7 @@ class Validation extends Model
     {
         foreach ($attributes as $key => $min) {
 
-            if (strlen($this->$key) < $min) {
+            if (isset($this->$key) && strlen($this->$key) < $min) {
 
                 $this->setError($key, "Esse campo deve conter no mínimo {$min} caracteres.");
             }

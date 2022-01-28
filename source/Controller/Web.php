@@ -30,19 +30,24 @@ class Web extends Controller
             ->render();
     }
 
-    public function users($data): void
+    public function update($data): void
     {
-        $this->restrict();
+        $this->restrict(true);
 
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        $user = User::find(['id' => $data['user']]);
+        $user_update = User::find(['id' => $data['user']]);
 
-        if (!$user) setMessage(['users' => 'Usuário não foi encontrado']);
+        if (!$user_update) { $this->router->redirect('web.home'); }
 
-        $this->view->load('users', [
+        if (!$user_update->is_active)
+        {
+            setMessage(['update_warning' => 'Usuário Desligado'], 'warning');
+        }
+
+        $this->view->load('update', [
             'page' => 'Usuários',
-            'user' => $user
+            'user_update' => $user_update,
         ])
             ->render();
     }
@@ -151,10 +156,21 @@ class Web extends Controller
             ->render();
     }
 
-    public function changePassword()
+    public function changePassword($data)
     {
+        $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        $logged_user = $data['user'] == $this->user->id ? true : false;
+
+        if (!$logged_user && !$this->user->is_admin)
+        {
+            $this->router->redirect('web.home');
+        }
+
         $this->view->load('changePassword', [
             'page' => 'Mudar Senha',
+            'user_changePassword' => $data['user'],
+            'logged_user' => $logged_user
         ])
             ->render();
     }
@@ -192,7 +208,7 @@ class Web extends Controller
 
     private function restrict($admin = false): void
     {
-        if (!$this->user) {
+        if (!$this->user || !$this->user->is_active) {
 
             $this->router->redirect('web.login');
         }

@@ -46,7 +46,8 @@ abstract class Model extends DataBase
 
     protected function checkRequiredColumns()
     {
-        if (!empty($required_columns = static::$columns['require'])) {
+        if (isset(static::$columns['require']) &&
+        !empty($required_columns = static::$columns['require'])) {
 
             foreach ($required_columns as $column) {
 

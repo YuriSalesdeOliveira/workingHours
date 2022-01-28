@@ -38,6 +38,8 @@
 
 .button.primary {
     color: var(--light_color);
+    border: 1px solid var(--main_color_dark);
+    border-radius: 3px;
     background-color: var(--main_color);
 }
 
@@ -48,6 +50,8 @@
 
 .button.secondary {
     color: var(--light_color);
+    border: 1px solid var(--accent_color_dark);
+    border-radius: 3px;
     background-color: var(--accent_color);
 }
 

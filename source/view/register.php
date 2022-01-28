@@ -1,7 +1,6 @@
 <form class="form width_35 centralize" action="<?= $router->route('auth.register') ?>" method="post">
 
-    <?= getMessage('register_success'); ?>
-    <?= getMessage('register_error'); ?>
+    <?= getMessage('register'); ?>
         
 
     <label for="first_name">Primeiro Nome</label>

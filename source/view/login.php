@@ -22,7 +22,7 @@
 
         <form action="<?= url('login') ?>" method="post">
 
-            <?= getMessage('login_error'); ?>
+            <?= getMessage('login'); ?>
 
             <div class="form_group">
 
