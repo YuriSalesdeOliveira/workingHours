@@ -1,5 +1,6 @@
 
 <?= getMessage('exceeded_to_clock_in') ?>
+<?= getMessage('to_clock_in') ?>
 
 <div class="card margin_bottom">
 
@@ -127,7 +128,7 @@
 
             <div class="actions">
 
-                <a href="<?= url('toclockin') ?>" class="button primary">Bater Ponto</a>
+                <a href="<?= $router->route('app.toClockIn') ?>" class="button primary">Bater Ponto</a>
 
                 <?php if ($user->is_admin):
 
@@ -159,7 +160,7 @@
             </p>
         </div>
 
-        <form action="<?= url('toclockin') ?>" method="post">
+        <form action="<?= $router->route('app.toClockIn') ?>" method="post">
 
             <input type="text" name="forced_to_clock_in" placeholder="00:00:00">
 

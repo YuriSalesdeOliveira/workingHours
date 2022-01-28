@@ -23,10 +23,17 @@ class App extends Controller
 
         if (isset($data['forced_to_clock_in'])) {
 
-            if (!$this->user->is_admin) { $this->router->redirect('web.home'); }
+            if (!$this->user->is_admin)
+            {
+                setMessage(['to_clock_in' => 'Ponto não registrado.']);
+
+                $this->router->redirect('web.home');
+            }
 
             $current_time = $data['forced_to_clock_in'];
         }
+
+        setMessage(['to_clock_in' => 'Ponto registrado !'], 'success');
 
         $working_hours->toClockIn($current_time);
 

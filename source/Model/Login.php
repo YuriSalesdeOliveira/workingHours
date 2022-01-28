@@ -16,7 +16,7 @@ class Login extends Model
 
         $validation->isEmail(['email']);
 
-        $validation->require();
+        $validation->require(['email', 'password']);
 
         $validation->throwErrors();
     }

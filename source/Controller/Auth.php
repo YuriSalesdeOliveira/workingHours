@@ -29,7 +29,7 @@ class Auth extends Controller
 
         } catch (ValidationException $e) {
 
-            setMessage($e->getErrors());
+            setMessage($e->getErrors(), 'error field');
 
         } catch (AppException $e) {
 
@@ -66,7 +66,7 @@ class Auth extends Controller
 
         } catch (ValidationException $e) {
 
-            setMessage($e->getErrors());
+            setMessage($e->getErrors(), 'error field');
 
         } catch (AppException $e) {
 
@@ -110,7 +110,7 @@ class Auth extends Controller
 
         } catch (ValidationException $e) {
 
-            setMessage($e->getErrors());
+            setMessage($e->getErrors(), 'error field');
 
         } catch (AppException $e) {
 
@@ -160,7 +160,7 @@ class Auth extends Controller
 
         } catch (ValidationException $e) {
 
-            setMessage($e->getErrors());
+            setMessage($e->getErrors(), 'error field');
 
         } catch (AppException $e) {
 

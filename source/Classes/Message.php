@@ -8,24 +8,12 @@ use Exception;
 
 class Message
 {
-    private static $types = [
-        'success',
-        'info',
-        'error',
-        'warning'
-    ];
-
-    public static function set(array $key_and_message, string $type = 'error'): void
+    public static function set(array $key_and_message, string $class = 'error'): void
     {
         foreach ($key_and_message as $key => $message) {
 
-            if (!in_array($type, self::$types)) {
-
-                throw new Exception('Informe um dos tipos disponiveis ' . implode(',', self::$types));
-            }
-
             $_SESSION['message'][$key] = [
-                'type' => $type,
+                'class' => "message_{$class}",
                 'message' => $message
             ];
 
@@ -38,7 +26,7 @@ class Message
 
             unset($_SESSION['message'][$key]);
 
-            return "<div class=\"message_{$message['type']}\">{$message['message']}</div>";
+            return "<div class=\"{$message['class']}\">{$message['message']}</div>";
         }
 
         return null;

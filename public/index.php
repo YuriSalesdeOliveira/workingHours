@@ -18,20 +18,18 @@ $router->group(null);
 $router->get('/', 'Web:home', 'web.home');
 $router->get('/home', 'Web:home', 'web.home');
 
-$router->get('/usuarios/{user}', 'Web:update', 'web.update');
-
 $router->get('/relatorio', 'Web:report', 'web.report');
 $router->post('/relatorio', 'Web:report', 'web.report');
 
 $router->get('/relatorio-gerencial', 'Web:managerReport', 'web.managerReport');
 $router->post('/relatorio-gerencial', 'Web:managerReport', 'web.managerReport');
 
-$router->get('/perfil', 'Web:profile', 'web.profile');
-
-$router->get('/mudar-senha/{user}', 'Web:changePassword', 'web.changePassword');
-
 $router->get('/login', 'Web:login', 'web.login');
-$router->get('/registrar', 'Web:register', 'web.register');
+
+$router->get('/perfil', 'Web:profile', 'web.profile');
+$router->get('/usuarios/registrar', 'Web:register', 'web.register');
+$router->get('/usuarios/editar/{user}', 'Web:update', 'web.update');
+$router->get('/usuarios/mudar-senha/{user}', 'Web:changePassword', 'web.changePassword');
 
 /*
  * APP
@@ -40,6 +38,7 @@ $router->get('/registrar', 'Web:register', 'web.register');
 $router->group(null);
 $router->get('/to-clock-in', 'App:toClockIn', 'app.toClockIn');
 $router->post('/to-clock-in', 'App:toClockIn', 'app.toClockIn');
+
 $router->get('/logout', 'App:logout', 'app.logout');
 
 /*
@@ -48,11 +47,12 @@ $router->get('/logout', 'App:logout', 'app.logout');
 
 $router->group(null);
 $router->post('/login', 'Auth:login', 'auth.login');
-$router->post('/registrar', 'Auth:register', 'auth.register');
-$router->post('/editar', 'Auth:update', 'auth.update');
-$router->post('/mudar-senha/{user}', 'Auth:changePassword', 'auth.changePassword');
-$router->get('/alternar-admin/{user}', 'Auth:toggleAdmin', 'auth.toggleAdmin');
-$router->get('/alternar-ativado/{user}', 'Auth:toggleActive', 'auth.toggleActive');
+
+$router->post('/usuarios/registrar', 'Auth:register', 'auth.register');
+$router->post('/usuarios/editar', 'Auth:update', 'auth.update');
+$router->post('/usuarios/mudar-senha/{user}', 'Auth:changePassword', 'auth.changePassword');
+$router->get('/usuarios/alternar-admin/{user}', 'Auth:toggleAdmin', 'auth.toggleAdmin');
+$router->get('/usuarios/alternar-ativado/{user}', 'Auth:toggleActive', 'auth.toggleActive');
 
 /*
  * ERROR
