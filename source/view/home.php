@@ -1,5 +1,4 @@
 
-<?= getMessage('exceeded_to_clock_in') ?>
 <?= getMessage('to_clock_in') ?>
 
 <div class="card margin_bottom">

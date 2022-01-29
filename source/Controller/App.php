@@ -3,7 +3,7 @@
 
 namespace Source\Controller;
 
-
+use Source\Exception\AppException;
 use Source\Model\WorkingHours;
 
 class App extends Controller
@@ -17,27 +17,31 @@ class App extends Controller
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        $working_hours = WorkingHours::workingHours($this->user->id, date('Y-m-d'));
+        try
+        {
+            $current_time = date('H:i:s');
 
-        $current_time = date('H:i:s');
+            $working_hours = WorkingHours::workingHours($this->user->id, date('Y-m-d'));
 
-        if (isset($data['forced_to_clock_in'])) {
-
-            if (!$this->user->is_admin)
+            if (isset($data['forced_to_clock_in']))
             {
-                setMessage(['to_clock_in' => 'Ponto não registrado.']);
+                if (!$this->user->is_admin) { throw new AppException('Ponto não registrado.'); }
 
-                $this->router->redirect('web.home');
+                $current_time = $data['forced_to_clock_in'];
             }
 
-            $current_time = $data['forced_to_clock_in'];
-        }
+            $working_hours->toClockIn($current_time);
+            
+            setMessage(['to_clock_in' => 'Ponto registrado !'], 'success');
 
-        setMessage(['to_clock_in' => 'Ponto registrado !'], 'success');
+        } catch (AppException $e)
+        {
+            setMessage(['to_clock_in' => $e->getMessage()]);
 
-        $working_hours->toClockIn($current_time);
-
-        $this->router->redirect('web.home');
+        } finally
+        {
+            $this->router->redirect('web.home');
+        }        
     }
 
     public function dataGenerator() {}

@@ -5,6 +5,7 @@ namespace Source\Model;
 use DateInterval;
 use DateTime;
 use Exception;
+use Source\Exception\AppException;
 
 class WorkingHours extends Model
 {
@@ -110,11 +111,28 @@ class WorkingHours extends Model
 
     public function toClockIn(string $time): void
     {
+        // if (!preg_match('/[0-9]{2}[:]{1}[0-9]{2}[:]{1}[0-9]{2}/', $time))
+        // { throw new AppException('error'); }
+
         $next_time = $this->getNextTime();
+        $times = $this->getTimeAsDateTime();
+
+        foreach ($times as $times_time)
+        {
+            if ($times_time)
+            {
+                if (isBeforeThatDate($time, $times_time))
+                {
+                    throw new AppException('Ponto inválido. Informe um horário à frente do último ponto.');
+
+                    return;
+                }
+            }
+        }
 
         if (!$next_time) {
 
-            setMessage(['exceeded_to_clock_in' => 'Limite de pontos por dia alcançados.']);
+            throw new AppException('Limite de pontos por dia alcançados.');
 
             return;
         }
