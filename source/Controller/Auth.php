@@ -84,14 +84,14 @@ class Auth extends Controller
 
         try {
             
-            if (isset($data['id']) && !$this->user->is_admin)
+            $logged_user = $data['id'] == $this->user->id ? true : false;
+
+            if (!$logged_user && !$this->user->is_admin)
             {
                 $this->router->redirect('web.home');
             }
 
-            $id = isset($data['id']) ? $data['id'] : $this->user->id;
-
-            $user = User::find(['id' => $id]);
+            $user = User::find(['id' => $data['id']]);
             
             if ($user)
             {
@@ -103,7 +103,7 @@ class Auth extends Controller
                 
                 setMessage(['update' => 'Usuário atualizado.'], 'success');
 
-                $this->router->redirect('web.update', ['user' => $id]);
+                $this->router->redirect('web.update', ['user' => $data['id']]);
             }
 
             throw new AppException('Não foi possivel editar esse usuário.');
@@ -118,7 +118,7 @@ class Auth extends Controller
 
         } finally {
 
-            $this->router->redirect('web.update', ['user' => $id]);
+            $this->router->redirect('web.update', ['user' => $data['id']]);
         }
     }
 
@@ -180,7 +180,7 @@ class Auth extends Controller
         {
             if (!isset($data['user']) || !$this->user->is_admin)
             {
-                throw new AppException('Não foi possivel tornar esse usuário um admin.');
+                throw new AppException('Não foi possivel modificar esse usuário.');
             }
 
             if ($data['user'] == $this->user->id)
@@ -208,7 +208,7 @@ class Auth extends Controller
                 $this->router->redirect('web.update', ['user' => $data['user']]);
             }
 
-            throw new AppException('Não foi possivel tornar esse usuário um admin.');
+            throw new AppException('Não foi possivel modificar esse usuário.');
 
         } catch (AppException $e)
         {
@@ -228,7 +228,7 @@ class Auth extends Controller
         {
             if (!isset($data['user']) || !$this->user->is_admin)
             {
-                throw new AppException('Não foi possivel ativar esse usuário.');
+                throw new AppException('Não foi possivel modificar esse usuário.');
             }
 
             if ($data['user'] == $this->user->id)

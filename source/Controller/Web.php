@@ -32,9 +32,16 @@ class Web extends Controller
 
     public function update($data): void
     {
-        $this->restrict(true);
+        $this->restrict();
 
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+        $logged_user = $data['user'] == $this->user->id ? true : false;
+
+        if (!$logged_user && !$this->user->is_admin)
+        {
+            $this->router->redirect('web.home');
+        }
 
         $user_update = User::find(['id' => $data['user']]);
 
@@ -42,7 +49,7 @@ class Web extends Controller
 
         if (!$user_update->is_active)
         {
-            setMessage(['update_warning' => 'Usuário Desligado'], 'warning');
+            setMessage(['update' => 'Usuário Desligado'], 'warning');
         }
 
         $this->view->load('update', [
@@ -185,7 +192,7 @@ class Web extends Controller
 
     public function register(): void
     {
-        $this->restrict();
+        $this->restrict(admin: true);
 
         $this->view->load('register', [
             'page' => 'Registrar'
