@@ -88,11 +88,25 @@ function getSecondsFromDateInterval(DateInterval $interval): int
 
 function secondsAsStringTime(string|int $seconds): string
 {
-    $hours = str_pad(intdiv($seconds, 3600), 2, 0, STR_PAD_LEFT);
-    $minutes = str_pad(intdiv($seconds % 3600, 60), 2, 0, STR_PAD_LEFT);
-    $seconds = str_pad($seconds - ($hours * 3600) - ($minutes * 60), 2, 0, STR_PAD_LEFT);
+    $hours = intdiv($seconds, 3600);
+    $minutes = intdiv($seconds % 3600, 60);
+    $seconds = ($seconds - ($hours * 3600)) - ($minutes * 60);
 
-    return preg_replace('/[-]/', "", "{$hours}:{$minutes}:{$seconds}");
+    $time = [
+        'hours' => $hours,
+        'minutes' => $minutes,
+        'seconds' => $seconds
+    ];
+
+    foreach ($time as $key => $value)
+    {
+        $value = preg_replace('/[-]/', "", $value);
+        $value = str_pad($value, 2, 0, STR_PAD_LEFT);
+
+        $$key = $value;
+    }
+    
+    return "{$hours}:{$minutes}:{$seconds}";
 }
 
 function getDayTemplateByOdds(int $regularRate, int $extraRate, int $lazyRate): array

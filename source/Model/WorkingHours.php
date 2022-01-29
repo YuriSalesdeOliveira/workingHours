@@ -13,7 +13,7 @@ class WorkingHours extends Model
     protected static $columns = [
         'primary' => 'id',
         'require' => ['user', 'work_date', 'worked_time'],
-        'timestamp' => false,
+        'timestamp' => true,
     ];
 
     public function user()

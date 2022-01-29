@@ -39,12 +39,40 @@ body {
     width: 35%;
 }
 
+.width_25 {
+    width: 25%;
+}
+
 .margin_top {
     margin-top: 50px;
 }
 
+.margin_top_5 {
+    margin-top: 5px;
+}
+
+.margin_top_10 {
+    margin-top: 10px;
+}
+
+.margin_top_15 {
+    margin-top: 15px;
+}
+
 .margin_bottom {
     margin-bottom: 50px;
+}
+
+.margin_bottom_5 {
+    margin-bottom: 5px;
+}
+
+.margin_bottom_10 {
+    margin-bottom: 10px;
+}
+
+.margin_bottom_15 {
+    margin-bottom: 15px;
 }
 
 .margin_right_5 {
@@ -84,6 +112,12 @@ body {
 .flex_left {
     display: flex;
     justify-content: flex-start;
+}
+
+.flex_column_left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .flex-wrap

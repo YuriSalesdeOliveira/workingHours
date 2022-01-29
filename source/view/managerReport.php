@@ -86,9 +86,11 @@
 
 </div>
 
-<div>
+<div class="margin_top margin_bottom">
     <h3>Horas trabalhadas no mês:</h3>
-    <div><?= secondsAsStringTime($sum_of_worked_time_in_month); ?></div>
+    <div class="margin_top">
+        <?= secondsAsStringTime($sum_of_worked_time_in_month); ?>
+    </div>
 </div>
 
 <?php $v->addScripts(['tr_href' => asset('js/tr_href.js')]); ?>
