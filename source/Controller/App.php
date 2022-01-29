@@ -45,11 +45,4 @@ class App extends Controller
     }
 
     public function dataGenerator() {}
-
-    public function logout(): void
-    {
-        unset($_SESSION['user']);
-
-        $this->router->redirect('web.login');
-    }
 }

@@ -182,14 +182,6 @@ class Web extends Controller
             ->render();
     }
 
-    public function login(): void
-    {
-        $this->view->layout(null);
-
-        $this->view->load('login')
-            ->render();
-    }
-
     public function register(): void
     {
         $this->restrict(admin: true);
@@ -211,18 +203,5 @@ class Web extends Controller
 
         $this->view->load('error', $data)
             ->render();
-    }
-
-    private function restrict($admin = false): void
-    {
-        if (!$this->user || !$this->user->is_active) {
-
-            $this->router->redirect('web.login');
-        }
-
-        if ($admin && !$this->user->is_admin) {
-
-            $this->router->redirect('web.home');
-        }
     }
 }

@@ -24,12 +24,19 @@ $router->post('/relatorio', 'Web:report', 'web.report');
 $router->get('/relatorio-gerencial', 'Web:managerReport', 'web.managerReport');
 $router->post('/relatorio-gerencial', 'Web:managerReport', 'web.managerReport');
 
-$router->get('/login', 'Web:login', 'web.login');
-
 $router->get('/perfil', 'Web:profile', 'web.profile');
 $router->get('/usuarios/registrar', 'Web:register', 'web.register');
 $router->get('/usuarios/editar/{user}', 'Web:update', 'web.update');
 $router->get('/usuarios/mudar-senha/{user}', 'Web:changePassword', 'web.changePassword');
+
+/**
+ * LOGIN
+ */
+
+$router->group(null);
+$router->get('/login', 'Login:login', 'login.login');
+$router->post('/login', 'Login:attempt', 'login.attempt');
+$router->get('/logout', 'Login:logout', 'login.logout');
 
 /*
  * APP
@@ -39,14 +46,11 @@ $router->group(null);
 $router->get('/to-clock-in', 'App:toClockIn', 'app.toClockIn');
 $router->post('/to-clock-in', 'App:toClockIn', 'app.toClockIn');
 
-$router->get('/logout', 'App:logout', 'app.logout');
-
 /*
  * AUTH
  */
 
 $router->group(null);
-$router->post('/login', 'Auth:login', 'auth.login');
 
 $router->post('/usuarios/registrar', 'Auth:register', 'auth.register');
 $router->post('/usuarios/editar', 'Auth:update', 'auth.update');

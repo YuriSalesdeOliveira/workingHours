@@ -20,7 +20,7 @@
 
         </header>
 
-        <form action="<?= url('login') ?>" method="post">
+        <form action="<?= $router->route('login.attempt'); ?>" method="post">
 
             <?= getMessage('login'); ?>
 

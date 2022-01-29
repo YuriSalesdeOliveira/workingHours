@@ -3,42 +3,18 @@
 
 namespace Source\Controller;
 
+use Source\Model\User;
+use CoffeeCode\Router\Router;
 use Source\Exception\AppException;
 use Source\Exception\ValidationException;
-use Source\Model\Login;
-use Source\Model\User;
 
 class Auth extends Controller
 {
-    public function login($data): void
+    public function __construct(Router $router)
     {
-        $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+        parent::__construct($router);
 
-        try {
-
-            $login = new Login();
-
-            $login->email = $data['email'];
-            $login->password = $data['password'];
-
-            $user = $login->login();
-
-            $_SESSION['user'] = $user->id;
-
-            $this->router->redirect('web.home');
-
-        } catch (ValidationException $e) {
-
-            setMessage($e->getErrors(), 'error field');
-
-        } catch (AppException $e) {
-
-            setMessage(['login' => $e->getMessage()]);
-
-        } finally {
-
-            $this->router->redirect('web.login');
-        }
+        $this->restrict();
     }
 
     public function register($data): void

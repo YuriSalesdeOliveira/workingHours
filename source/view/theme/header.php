@@ -18,7 +18,7 @@
 
         </div>
 
-        <a class="main_header_session_logout" href="<?= $router->route('app.logout') ?>">Sair</a>
+        <a class="main_header_session_logout" href="<?= $router->route('login.logout') ?>">Sair</a>
 
     </div>
 

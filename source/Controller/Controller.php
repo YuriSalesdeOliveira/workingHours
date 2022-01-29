@@ -26,4 +26,17 @@ abstract class Controller
             $this->user = $user;
         }
     }
+
+    protected function restrict($admin = false): void
+    {
+        if (!$this->user || !$this->user->is_active) {
+
+            $this->router->redirect('login.login');
+        }
+
+        if ($admin && !$this->user->is_admin) {
+
+            $this->router->redirect('web.home');
+        }
+    }
 }
