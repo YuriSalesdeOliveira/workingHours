@@ -201,7 +201,7 @@ class Auth extends Controller
                 $is_admin_string = $user->is_admin ? 'é' : 'não é';
 
                 setMessage(
-                    ['toggle_admin' => "O usuário {$user->first_name} {$is_admin_string} um admin"]
+                    ['toggle_admin' => "O usuário {$user->first_name} {$is_admin_string} um admin."]
                     , 'success'
                 );
 
@@ -249,7 +249,7 @@ class Auth extends Controller
                 $is_active_string = $user->is_active ? 'ativo' : 'desligado';
 
                 setMessage(
-                    ['toggle_active' => "O usuário {$user->first_name} está {$is_active_string}"],
+                    ['toggle_active' => "O usuário {$user->first_name} está {$is_active_string}."],
                     'success'
                 );
 

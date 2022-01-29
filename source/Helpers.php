@@ -22,5 +22,10 @@ function getMessage(string $key): ?string
     return Message::get($key);
 }
 
+function checkMessage(string $key): bool
+{
+    return Message::check($key);
+}
+
 
 

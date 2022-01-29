@@ -3,11 +3,15 @@
 
 namespace Source\Classes;
 
-
-use Exception;
-
 class Message
 {
+    public static function check(string $key): bool
+    {
+        if (isset($_SESSION['message'][$key])) { return true; }
+
+        return false;
+    }
+
     public static function set(array $key_and_message, string $class = 'error'): void
     {
         foreach ($key_and_message as $key => $message) {

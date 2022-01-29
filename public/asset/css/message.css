@@ -1,6 +1,15 @@
-.message_error
+.message_error,
+.message_success,
+.message_warning
 {
     font-size: 16px;
+    padding: 10px 5px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+
+.message_error
+{
     color: #721c24;
     border: 1px solid #721c24;
     background-color: rgba(114, 28, 36, .4);
@@ -8,7 +17,6 @@
 
 .message_success
 {
-    font-size: 16px;
     color: #155724;
     border: 1px solid #155724;
     background-color: rgba(21, 87, 36, .4);
@@ -16,21 +24,10 @@
 
 .message_warning
 {
-    font-size: 16px;
     color: #2378aa;
     border: 1px solid #2378aa;
     background-color: rgba(42, 154, 219, 0.4)
 }
-
-.message_error,
-.message_success,
-.message_warning
-{
-    padding: 10px 5px;
-    margin-bottom: 20px;
-    border-radius: 3px;
-}
-
 
 .message_error.field,
 .message_success.field,
@@ -38,6 +35,7 @@
 {
     font-size: 14px;
     padding: 0;
+    margin: 0;
     border: none;
     background-color: transparent;
 }

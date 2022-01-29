@@ -47,9 +47,9 @@ class Web extends Controller
 
         if (!$user_update) { $this->router->redirect('web.home'); }
 
-        if (!$user_update->is_active)
+        if (!$user_update->is_active && !checkMessage('update'))
         {
-            setMessage(['update' => 'Usuário Desligado'], 'warning');
+            setMessage(['update' => 'Usuário Desligado.'], 'warning');
         }
 
         $this->view->load('update', [
