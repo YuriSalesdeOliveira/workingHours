@@ -47,7 +47,7 @@ class WorkingHours extends Model
         $firstDate = $date->modify('first day of this month')->format('Y-m-d');
         $lastDate = $date->modify('last day of this month')->format('Y-m-d');
         
-        $result = static::find([
+        $result = static::fetch([
             'user' => $user,
             'sql_raw' => "work_date between '{$firstDate}' AND '{$lastDate}'"
         ]);
